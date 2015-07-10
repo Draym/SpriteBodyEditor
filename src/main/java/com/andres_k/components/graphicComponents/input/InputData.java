@@ -25,7 +25,9 @@ public class InputData {
         while (iterator.hasNext()) {
             String input = (String) iterator.next();
             String value = this.configs.getString(input);
-            this.availableInput.put(EnumInput.getEnumByValue(input), value);
+            if (EnumInput.getEnumByValue(input) != EnumInput.NOTHING) {
+                this.availableInput.put(EnumInput.getEnumByValue(input), value);
+            }
         }
     }
 
