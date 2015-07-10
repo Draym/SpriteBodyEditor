@@ -40,7 +40,7 @@ public class GameController extends WindowController {
         this.bodyFocused = null;
         this.startClick = null;
         this.endClick = null;
-        this.inputGame = new InputGame(new InputData("configInput.json"));
+        this.inputGame = new InputGame();
     }
 
     @Override

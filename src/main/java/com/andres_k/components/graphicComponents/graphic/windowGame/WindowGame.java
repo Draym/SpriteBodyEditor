@@ -31,8 +31,7 @@ public class WindowGame extends WindowBasedGame {
         interfaceTask.addObserver(this.controller);
         this.controller.addObserver(interfaceTask);
 
-        InputData inputData = new InputData("configInput.json");
-        this.overlay = new GameOverlay(inputData);
+        this.overlay = new GameOverlay();
         interfaceTask.addObserver(this.overlay);
         this.overlay.addObserver(interfaceTask);
     }

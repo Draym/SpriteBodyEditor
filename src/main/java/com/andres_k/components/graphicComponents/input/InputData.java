@@ -12,36 +12,35 @@ import java.util.Map;
  * Created by andres_k on 22/05/2015.
  */
 public class InputData {
-    private Map<EnumInput, String> availableInput;
-    private JSONObject configs;
-    private String file;
+    private static Map<EnumInput, String> availableInput = new LinkedHashMap<>();
+    private static JSONObject configs;
+    private static String file;
 
-    public InputData(String file) throws JSONException {
-        this.availableInput = new LinkedHashMap<>();
-        this.configs = new JSONObject(StringTools.readFile(file));
-        this.file = file;
+    public static void init(String file) throws JSONException {
+        configs = new JSONObject(StringTools.readFile(file));
+        InputData.file = file;
 
-        Iterator iterator = this.configs.keys();
+        Iterator iterator = configs.keys();
         while (iterator.hasNext()) {
             String input = (String) iterator.next();
-            String value = this.configs.getString(input);
+            String value = configs.getString(input);
             if (EnumInput.getEnumByValue(input) != EnumInput.NOTHING) {
-                this.availableInput.put(EnumInput.getEnumByValue(input), value);
+                availableInput.put(EnumInput.getEnumByValue(input), value);
             }
         }
     }
 
     // GETTERS
-    public Map<EnumInput, String> getAvailableInput(){
-        return this.availableInput;
+    public static Map<EnumInput, String> getAvailableInput(){
+        return availableInput;
     }
 
-    public String getInputValue(EnumInput input) {
-        return this.availableInput.get(input);
+    public static String getInputValue(EnumInput input) {
+        return availableInput.get(input);
     }
 
-    public String getInputByValue(String value){
-        for (Map.Entry<EnumInput, String> entry : this.availableInput.entrySet()){
+    public static String getInputByValue(String value){
+        for (Map.Entry<EnumInput, String> entry : availableInput.entrySet()){
             if (entry.getValue().equals(value)){
                 return entry.getKey().getValue();
             }
@@ -51,15 +50,15 @@ public class InputData {
 
     // SETTERS
 
-    public boolean setAvailableInput(EnumInput type, String value){
-        if (this.availableInput.containsKey(type) && !this.availableInput.containsValue(value)){
-            this.availableInput.replace(type, value);
+    public static boolean setAvailableInput(EnumInput type, String value){
+        if (availableInput.containsKey(type) && !availableInput.containsValue(value)){
+            availableInput.replace(type, value);
             try {
-                this.configs.put(type.getValue(), value);
+                configs.put(type.getValue(), value);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            StringTools.writeInFile(this.file, this.configs.toString());
+            StringTools.writeInFile(file, configs.toString());
             return true;
         }
         return false;

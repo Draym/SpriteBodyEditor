@@ -37,8 +37,8 @@ import java.util.Observable;
  */
 public class InterfaceOverlay extends Overlay {
 
-    public InterfaceOverlay(InputData inputData) throws JSONException {
-        super(inputData);
+    public InterfaceOverlay() throws JSONException {
+        super();
 
         this.initElements();
         this.initPreference();
@@ -101,7 +101,7 @@ public class InterfaceOverlay extends Overlay {
         tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer("Controls"), Color.black,
                 EnumOverlayElement.CONTROLS.getValue() + ":" + EnumOverlayElement.CONTROLS.getValue(), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.BUTTON));
 
-        for (Map.Entry<EnumInput, String> entry : this.inputData.getAvailableInput().entrySet()) {
+        for (Map.Entry<EnumInput, String> entry : InputData.getAvailableInput().entrySet()) {
             tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer(entry.getKey().getValue() + ":" +
                     StringTools.duplicateString(" ", 14 - entry.getKey().getValue().length()) + entry.getValue() +
                     StringTools.duplicateString(" ", 18 - entry.getValue().length())), Color.black,
@@ -253,7 +253,7 @@ public class InterfaceOverlay extends Overlay {
                     Pair<Object, Object> task = (Pair<Object, Object>) result;
 
                     if (task.getV1() instanceof EnumInput && task.getV2() instanceof String) {
-                        if (this.inputData.setAvailableInput((EnumInput) task.getV1(), (String) task.getV2())) {
+                        if (InputData.setAvailableInput((EnumInput) task.getV1(), (String) task.getV2())) {
                             this.elements.get(EnumOverlayElement.TABLE_MENU_CONTROLS).doTask(task.getV2());
                         }
                     }
