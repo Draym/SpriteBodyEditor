@@ -1,8 +1,8 @@
 package com.andres_k.components.gameComponents.gameObject;
 
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
-import com.andres_k.utils.tools.Debug;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.Color;
@@ -36,7 +36,8 @@ public class BodyRect {
     public void draw(Graphics g) {
         if (this.focused) {
             g.setColor(ColorTools.get(ColorTools.Colors.TRANSPARENT_YELLOW));
-            g.fill(this.body);
+            g.fillRect((this.body.getMinX() * GlobalVariable.zoom) - GlobalVariable.originX, (this.body.getMinY() * GlobalVariable.zoom) - GlobalVariable.originY,
+                    this.body.getWidth() * GlobalVariable.zoom, this.body.getHeight() * GlobalVariable.zoom);
         } else if (this.type == EnumGameObject.DEFENSE_BODY) {
             g.setColor(Color.cyan);
         } else if (this.type == EnumGameObject.ATTACK_BODY) {
@@ -44,8 +45,10 @@ public class BodyRect {
         } else if (this.type == EnumGameObject.BLOCK_BODY) {
             g.setColor(Color.green);
         }
-        if (!focused)
-            g.draw(this.body);
+        if (!focused) {
+            g.drawRect((this.body.getMinX() * GlobalVariable.zoom) - GlobalVariable.originX, (this.body.getMinY() * GlobalVariable.zoom) - GlobalVariable.originY,
+                    this.body.getWidth() * GlobalVariable.zoom, this.body.getHeight() * GlobalVariable.zoom);
+        }
     }
 
     public boolean isOnFocus(float x, float y) {

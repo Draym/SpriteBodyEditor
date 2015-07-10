@@ -50,7 +50,7 @@ public class BodyCreator {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(this.image, 0, 0);
+        this.image.draw(-GlobalVariable.originX, -GlobalVariable.originY, GlobalVariable.zoom);
         for (BodySprite body : this.bodies) {
             body.draw(g);
         }

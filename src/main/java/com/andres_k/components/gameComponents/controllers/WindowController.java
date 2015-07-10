@@ -33,6 +33,8 @@ public abstract class WindowController extends Observable implements Observer {
 
     public abstract void mousePressed(int button, int x, int y);
 
+    public abstract void mouseWheelMove(int newValue);
+
     public void setStateWindow(StateBasedGame stateWindow){
         this.stateWindow = stateWindow;
     }

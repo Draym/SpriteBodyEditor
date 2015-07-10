@@ -13,7 +13,7 @@ public class InputGame extends Observable {
     public InputGame() throws JSONException {
     }
 
-    public int checkInput(int key, EnumInput mode) {
+    public EnumInput checkInput(int key, EnumInput mode) {
         String keyName;
 
         if (key == -2) {
@@ -23,6 +23,6 @@ public class InputGame extends Observable {
         } else {
             keyName = Input.getKeyName(key);
         }
-        return EnumInput.getIndexByValue(InputData.getInputByValue(keyName));
+        return EnumInput.getEnumByValue(InputData.getInputByValue(keyName));
     }
 }

@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject;
 
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Debug;
 import org.codehaus.jettison.json.JSONArray;
@@ -39,7 +40,8 @@ public class BodySprite {
 
     public void draw(Graphics g) {
         g.setColor(Color.red);
-        g.draw(this.spriteBody);
+        g.drawRect((this.spriteBody.getMinX() * GlobalVariable.zoom) - GlobalVariable.originX, (this.spriteBody.getMinY() * GlobalVariable.zoom) - GlobalVariable.originY,
+                this.spriteBody.getWidth() * GlobalVariable.zoom, this.spriteBody.getHeight() * GlobalVariable.zoom);
         for (BodyRect body : this.bodies) {
             body.draw(g);
         }

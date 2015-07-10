@@ -1,1 +1,12 @@
-{"ATTACK":"A","DEFENSE":"Z","BLOCK":"E","DELETE":"BACK","OVERLAY_1":"1","OVERLAY_2":"2"}
+{
+  "MOVE_UP": "UP",
+  "MOVE_DOWN": "DOWN",
+  "MOVE_LEFT": "LEFT",
+  "MOVE_RIGHT": "RIGHT",
+  "ATTACK": "A",
+  "DEFENSE": "Z",
+  "BLOCK": "E",
+  "DELETE": "BACK",
+  "OVERLAY_1": "1",
+  "OVERLAY_2": "2"
+}

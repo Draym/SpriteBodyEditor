@@ -115,6 +115,11 @@ public class WindowGame extends WindowBasedGame {
     }
 
     @Override
+    public void mouseWheelMoved(int newValue){
+        this.controller.mouseWheelMove(newValue);
+    }
+
+    @Override
     public void quit() {
         this.clean();
         this.stateWindow.enterState(EnumWindow.INTERFACE.getValue());

@@ -102,6 +102,11 @@ public class InterfaceController extends WindowController {
     }
 
     @Override
+    public void mouseWheelMove(int newValue) {
+
+    }
+
+    @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Tuple) {
             Tuple<EnumTargetTask, EnumTargetTask, Object> received = (Tuple<EnumTargetTask, EnumTargetTask, Object>) arg;
