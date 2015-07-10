@@ -82,9 +82,15 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             animation.addFrame(img, 150);
             animation.setLooping(false);
             animator.addAnimation(EnumAnimation.BASIC, animation);
-        }else if (index == EnumSprites.GO) {
+        } else if (index == EnumSprites.GO) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/go.png");
+            animation.addFrame(img, 150);
+            animation.setLooping(false);
+            animator.addAnimation(EnumAnimation.BASIC, animation);
+        } else if (index == EnumSprites.SAVE) {
+            Animation animation = new Animation();
+            Image img = new Image("image/overlay/save.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
             animator.addAnimation(EnumAnimation.BASIC, animation);

@@ -14,7 +14,7 @@ public enum EnumSprites {
     NEW_ROUND(ROUND.getIndex()), END_ROUND(ROUND.getIndex()), TIMER(ROUND.getIndex()),
     //menuOverlay
     EXIT(MENU.getIndex()), SETTINGS(MENU.getIndex()), CONTROLS(MENU.getIndex()), SCREEN(MENU.getIndex()),
-    NEW(MENU.getIndex()), GO(MENU.getIndex());
+    NEW(MENU.getIndex()), GO(MENU.getIndex()), SAVE(MENU.getIndex());
 
 
     private final int index;

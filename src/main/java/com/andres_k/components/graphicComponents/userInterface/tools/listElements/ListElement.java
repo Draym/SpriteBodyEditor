@@ -72,6 +72,15 @@ public abstract class ListElement {
         return null;
     }
 
+    public void deleteElement(String id){
+        for (int i = 0; i < this.elements.size(); ++i){
+            if (this.elements.get(i).getId().equals(id)){
+                this.elements.remove(i);
+                --i;
+            }
+        }
+    }
+
     protected boolean containsHeadId(String head, String id){
         if (head.contains(":")){
             return head.substring(0, head.indexOf(":")).equals(id.substring(0, id.indexOf(":")));

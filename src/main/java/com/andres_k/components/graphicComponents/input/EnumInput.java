@@ -6,8 +6,8 @@ package com.andres_k.components.graphicComponents.input;
 public enum EnumInput {
     NOTHING(-3, "NOTHING"),
     RELEASED(-2, "RELEASED"), PRESSED(-1, "PRESSED"),
-    ATTACK(0, "ATTACK"), DEFENSE(1, "DEFENSE"), BLOCK(2, "BLOCK"),
-    OVERLAY_1(3, "OVERLAY_1"), OVERLAY_2(4, "OVERLAY_2");
+    ATTACK(0, "ATTACK"), DEFENSE(1, "DEFENSE"), BLOCK(2, "BLOCK"), DELETE(3, "DELETE"),
+    OVERLAY_1(4, "OVERLAY_1"), OVERLAY_2(5, "OVERLAY_2");
 
     private final int index;
     private final String value;
@@ -59,6 +59,6 @@ public enum EnumInput {
                 return type.getIndex();
             }
         }
-        return 0;
+        return NOTHING.getIndex();
     }
 }

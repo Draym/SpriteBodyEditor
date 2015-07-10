@@ -1,7 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay;
 
 import com.andres_k.components.gameComponents.animations.AnimatorOverlayData;
-import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputData;
 import com.andres_k.components.graphicComponents.sounds.MusicController;
@@ -202,7 +201,7 @@ public class InterfaceOverlay extends Overlay {
                 if (received.getV2() == EnumOverlayElement.EXIT && this.elements.containsKey(received.getV1())) {
                     this.elements.get(received.getV1()).stop();
                     this.setChanged();
-                    this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE_OVERLAY, EnumTargetTask.INTERFACE, EnumWindow.EXIT));
+                    this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE_OVERLAY, EnumTargetTask.INTERFACE, received.getV2()));
                 } else if (this.elements.containsKey(received.getV1()) && this.elements.containsKey(received.getV2())) {
                     this.elements.get(received.getV1()).stop();
                     this.elements.get(received.getV2()).start();

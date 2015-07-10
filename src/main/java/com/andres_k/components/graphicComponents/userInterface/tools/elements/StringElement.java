@@ -70,7 +70,7 @@ public class StringElement extends Element {
         Pair<Float, Float> position = this.getChoicePosition(body, value);
 
         BodyRect tmp = new BodyRect(body.getBody(), body.getColor());
-        if (this.body != null && tmp.getColor() == null){
+        if (this.body != null && tmp.getColor() == null) {
             tmp.setColor(this.body.getColor());
         }
 
@@ -148,6 +148,11 @@ public class StringElement extends Element {
     }
 
     @Override
+    public boolean isNull() {
+        return (this.stringTimer == null);
+    }
+
+    @Override
     public float getAbsoluteWidth() {
         return this.stringTimer.getValue().length() * StringTools.charSizeX();
     }
@@ -172,6 +177,10 @@ public class StringElement extends Element {
 
     @Override
     public String toString() {
-        return this.stringTimer.getValue();
+        if (this.stringTimer != null) {
+            return this.stringTimer.getValue();
+        } else {
+            return null;
+        }
     }
 }

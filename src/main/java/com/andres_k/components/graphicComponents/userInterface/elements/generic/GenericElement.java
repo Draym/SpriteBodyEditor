@@ -7,7 +7,7 @@ import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverl
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
 import com.andres_k.components.networkComponents.messages.MessageChat;
-import com.andres_k.components.networkComponents.messages.MessageFileCreate;
+import com.andres_k.components.networkComponents.messages.MessageFileNew;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
@@ -136,7 +136,7 @@ public class GenericElement extends InterfaceElement {
                 if (result != null) {
                     if (result instanceof EnumOverlayElement) {
                         if (result == EnumOverlayElement.GO) {
-                            MessageFileCreate task = new MessageFileCreate("admin", "admin", EnumOverlayElement.GO);
+                            MessageFileNew task = new MessageFileNew("admin", "admin", EnumOverlayElement.GO);
 
                             for (Element tmp : this.elements) {
                                 if (tmp.getType() == EnumOverlayElement.SELECT_FIELD) {

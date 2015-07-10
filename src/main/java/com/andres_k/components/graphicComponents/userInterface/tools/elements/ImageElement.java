@@ -200,6 +200,11 @@ public class ImageElement extends Element {
     }
 
     @Override
+    public boolean isNull() {
+        return (this.animator == null);
+    }
+
+    @Override
     public float getAbsoluteWidth() {
         return this.animator.currentAnimation().getWidth();
     }

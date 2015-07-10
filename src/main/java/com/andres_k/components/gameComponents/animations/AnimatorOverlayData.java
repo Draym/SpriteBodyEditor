@@ -44,6 +44,7 @@ public class AnimatorOverlayData {
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.SCREEN), EnumOverlayElement.SCREEN);
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.NEW), EnumOverlayElement.NEW);
         this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.GO), EnumOverlayElement.GO);
+        this.addMenuAnimator(this.animatorFactory.getAnimator(EnumSprites.SAVE), EnumOverlayElement.SAVE);
     }
 
     public void addRoundAnimator(Animator roundAnimator, EnumOverlayElement type) {

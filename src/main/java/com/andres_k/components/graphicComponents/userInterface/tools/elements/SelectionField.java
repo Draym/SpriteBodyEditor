@@ -92,7 +92,7 @@ public class SelectionField extends Element {
                 char c = (char) ((Tuple) task).getV3();
                 if (key == Input.KEY_BACK) {
                     this.stringElement.deleteValue(this.stringElement.getValue().length() - 1, 1);
-                } else {
+                } else if (c >= 32 && c <= 126){
                     this.stringElement.addToValue(this.stringElement.getValue().length(), String.valueOf(c));
                 }
             }
@@ -108,6 +108,11 @@ public class SelectionField extends Element {
     @Override
     public boolean isEmpty() {
         return this.stringElement.isActivated();
+    }
+
+    @Override
+    public boolean isNull() {
+        return this.stringElement.isNull();
     }
 
     // GETTERS

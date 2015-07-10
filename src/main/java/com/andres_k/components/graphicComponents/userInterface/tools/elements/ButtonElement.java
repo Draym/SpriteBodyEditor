@@ -67,6 +67,11 @@ public class ButtonElement extends Element {
     }
 
     @Override
+    public boolean isNull() {
+        return this.element.isNull();
+    }
+
+    @Override
     public float getAbsoluteWidth() {
         return this.element.getAbsoluteWidth();
     }

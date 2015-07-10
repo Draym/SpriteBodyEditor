@@ -1,7 +1,6 @@
 package com.andres_k.components.graphicComponents.input;
 
 
-import com.andres_k.components.gameComponents.controllers.GameController;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Input;
 
@@ -24,7 +23,7 @@ public class InputGame extends Observable {
         }
     }
 
-    public int checkInput(GameController gameController, int key, EnumInput mode, int posX, int posY) {
+    public int checkInput(int key, EnumInput mode) {
         String keyName;
 
         if (this.valid == false)
@@ -36,9 +35,6 @@ public class InputGame extends Observable {
         } else {
             keyName = Input.getKeyName(key);
         }
-        if ((keyName.equals(this.inputData.getInputValue(EnumInput.OVERLAY_1)) || keyName.equals(this.inputData.getInputValue(EnumInput.OVERLAY_2)))&& mode == EnumInput.RELEASED) {
-            return EnumInput.getIndexByValue(this.inputData.getInputByValue(keyName));
-        }
-        return 0;
+        return EnumInput.getIndexByValue(this.inputData.getInputByValue(keyName));
     }
 }

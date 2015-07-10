@@ -2,6 +2,7 @@ package com.andres_k.utils.tools;
 
 
 import com.andres_k.utils.stockage.Pair;
+import org.newdawn.slick.geom.Rectangle;
 
 import java.awt.geom.AffineTransform;
 
@@ -33,5 +34,26 @@ public class MathTools {
         AffineTransform.getRotateInstance(Math.toRadians(angle), center.getV1(), center.getV2()).transform(newPoint, 0, newPoint, 0, 1);
         point.setV1(newPoint[0]);
         point.setV2(newPoint[1]);
+    }
+
+    public static float getDistance(float p1, float p2){
+        float distance = p1 - p2;
+        distance = (distance < 0 ? distance * (-1) : distance);
+        return distance;
+    }
+
+    public static Rectangle createRectangle(Pair<Float, Float> p1, Pair<Float, Float> p2){
+        float x = p1.getV1();
+        float y = p1.getV2();
+        float sizeX = getDistance(p1.getV1(), p2.getV1());
+        float sizeY = getDistance(p1.getV2(), p2.getV2());
+
+        if (p2.getV1() - x < 0){
+            x = p2.getV1();
+        }
+        if (p2.getV2() - y < 0){
+            y = p2.getV2();
+        }
+        return new Rectangle(x, y, sizeX, sizeY);
     }
 }

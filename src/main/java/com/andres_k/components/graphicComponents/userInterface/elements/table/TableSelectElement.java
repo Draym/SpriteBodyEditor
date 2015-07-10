@@ -58,7 +58,7 @@ public class TableSelectElement extends InterfaceElement {
     }
 
     @Override
-    public void clearData(){
+    public void clearData() {
         for (Map.Entry<Element, ListElement> item : this.table.entrySet()) {
             item.getKey().leave();
             item.getValue().clear();
@@ -144,7 +144,7 @@ public class TableSelectElement extends InterfaceElement {
                 }
             }
         }
-        if (this.selected != null){
+        if (this.selected != null) {
             this.selected.setBodyColor(null);
             this.genericSendTask.sendTask(new Pair<>("send", new MessageSelectImage("admin", "admin", "")));
             this.selected = null;
@@ -159,8 +159,12 @@ public class TableSelectElement extends InterfaceElement {
             if (checkSameHeadId(item.getId())) {
                 key.replace(item);
             } else {
-                this.table.get(key).setBody(this.positionBody.get(key.getId()).getV2());
-                this.table.get(key).addToPrint(item, Element.PositionInBody.MIDDLE_MID);
+                if (item.isNull()) {
+                    this.table.get(key).deleteElement(item.getId());
+                } else {
+                    this.table.get(key).setBody(this.positionBody.get(key.getId()).getV2());
+                    this.table.get(key).addToPrint(item, Element.PositionInBody.MIDDLE_MID);
+                }
             }
         } else {
             if (this.checkSameHeadId(item.getId())) {
@@ -212,7 +216,7 @@ public class TableSelectElement extends InterfaceElement {
                 return entry.getKey();
             }
             Element element = entry.getValue().getElement(id);
-            if (element != null){
+            if (element != null) {
                 return element;
             }
         }

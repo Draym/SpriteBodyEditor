@@ -42,6 +42,7 @@ public enum EnumOverlayElement {
     BUTTON("button"),
     BORDER("border"),
     SELECT_FIELD("selectField"),
+    SAVE("save"),
     GO("go"),
 
     // roundAnimator

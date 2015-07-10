@@ -51,6 +51,8 @@ public abstract class Element {
 
     public abstract boolean isEmpty();
 
+    public abstract boolean isNull();
+
     public String getId(){
         return this.id;
     }

@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * Created by andres_k on 09/07/2015.
  */
-public class MessageFileCreate extends MessageModel {
+public class MessageFileNew extends MessageModel {
     EnumOverlayElement from;
     List<Object> objects;
 
-    public MessageFileCreate(String pseudo, String id, EnumOverlayElement from){
+    public MessageFileNew(String pseudo, String id, EnumOverlayElement from){
         this.pseudo = pseudo;
         this.id = id;
         this.from = from;

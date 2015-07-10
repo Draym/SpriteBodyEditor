@@ -22,7 +22,6 @@ public class WindowInterface extends WindowBasedGame {
     private Image title;
 
     public WindowInterface(int idWindow, GenericSendTask interfaceTask) throws JSONException, SlickException {
-        Debug.debug("constructor");
         this.idWindow = idWindow;
 
         this.animatorOverlay = new AnimatorOverlayData();
@@ -35,7 +34,6 @@ public class WindowInterface extends WindowBasedGame {
         this.overlay = new InterfaceOverlay(inputData);
         interfaceTask.addObserver(this.overlay);
         this.overlay.addObserver(interfaceTask);
-        Debug.debug("end constructor Interface");
     }
 
     @Override
@@ -45,7 +43,6 @@ public class WindowInterface extends WindowBasedGame {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        Debug.debug("init INTERFACE");
         this.container = gameContainer;
         this.stateWindow = stateBasedGame;
 
@@ -66,20 +63,18 @@ public class WindowInterface extends WindowBasedGame {
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        Debug.debug("enter INTERFACE");
-
         this.container.setTargetFrameRate(60);
         this.container.setShowFPS(false);
         this.container.setAlwaysRender(false);
         this.container.setVSync(false);
 
-        Debug.debug("end enter INTERFACE");
+        this.controller.enter();
     }
 
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        Debug.debug("LEAVE INTERFACE");
+        this.controller.leave();
         this.clean();
     }
 
@@ -89,33 +84,42 @@ public class WindowInterface extends WindowBasedGame {
         graphics.fillRect(0, 0, WindowConfig.getSizeX(), WindowConfig.getSizeY());
         graphics.drawImage(this.background, 0, 0);
         graphics.drawImage(this.title, 50, 50);
-//        Debug.debug("draw");
+
         this.controller.renderWindow(graphics);
         this.overlay.draw(graphics);
-  //      Debug.debug("end draw");
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-    //    Debug.debug("update");
-        this.controller.updateWindow();
+        this.controller.updateWindow(gameContainer);
         this.overlay.updateOverlay();
-      //  Debug.debug("end update");
     }
 
     @Override
     public void keyPressed(int key, char c) {
         boolean absorbed = this.overlay.event(key, c, EnumInput.PRESSED);
+        if (!absorbed) {
+            this.controller.keyPressed(key, c);
+        }
     }
 
     @Override
     public void keyReleased(int key, char c) {
         boolean absorbed = this.overlay.event(key, c, EnumInput.RELEASED);
+        if (!absorbed) {
+            this.controller.keyReleased(key, c);
+        }
+    }
+
+    @Override
+    public void mousePressed(int button, int x, int y) {
+        this.controller.mousePressed(button, x, y);
     }
 
     @Override
     public void mouseReleased(int button, int x, int y) {
         if (!this.overlay.isOnFocus(x, y)) {
+            this.controller.mouseReleased(button, x, y);
         }
     }
 
@@ -126,7 +130,7 @@ public class WindowInterface extends WindowBasedGame {
     }
 
     @Override
-    public void clean(){
+    public void clean() {
         this.overlay.leave();
     }
 }
