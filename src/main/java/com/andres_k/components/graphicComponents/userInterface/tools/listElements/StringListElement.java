@@ -97,7 +97,6 @@ public class StringListElement extends ListElement {
             this.addMessage((Tuple<Color, String, String>) object, null, positionInBody, 0);
         } else if (object instanceof StringElement) {
             StringElement task = (StringElement) object;
-
             int position = this.deleteElemIfExist(task.getId());
             this.addMessage(new Tuple<>(task.getColor(), task.getValue(), task.getId()), null, positionInBody, position);
         }
@@ -128,9 +127,10 @@ public class StringListElement extends ListElement {
     private int deleteElemIfExist(String id) {
         this.clearEmpty();
         int position = this.containsElement(id);
+
         if (position != -1) {
             for (int i = position; i < this.elements.size(); ++i) {
-                if (this.containsHeadId(elements.get(i).getId(), id)) {
+                if (elements.get(i).getId().equals(id)) {
                     this.elements.remove(i);
                     --i;
                     if (position > 0) {

@@ -136,6 +136,9 @@ public class TableSelectElement extends InterfaceElement {
                 Object result = entry.getValue().isOnFocus(x, y);
                 if (result != null) {
                     if (result instanceof Element) {
+                        if (this.selected != null){
+                            this.selected.setBodyColor(null);
+                        }
                         this.selected = (Element) result;
                         this.selected.setBodyColor(ColorTools.get(ColorTools.Colors.TRANSPARENT_YELLOW));
                         this.genericSendTask.sendTask(new Pair<>("send", new MessageSelectImage("admin", "admin", result.toString())));
@@ -155,7 +158,7 @@ public class TableSelectElement extends InterfaceElement {
     public void addElement(Element item) {
         Element key = this.containsKey(item);
         if (key != null) {
-            //           Debug.debug("add elem: '" + item.toString() + "'");
+//            Debug.debug("add elem: '" + item.toString() + "'");
             if (checkSameHeadId(item.getId())) {
                 key.replace(item);
             } else {

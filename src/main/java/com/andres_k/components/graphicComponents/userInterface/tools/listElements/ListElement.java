@@ -14,14 +14,14 @@ public abstract class ListElement {
     protected BodyRect body;
     protected float border;
 
-    public void leave(){
-        for (Element element : this.elements){
+    public void leave() {
+        for (Element element : this.elements) {
             element.leave();
         }
     }
 
-    public void clear(){
-        for (Element element : this.elements){
+    public void clear() {
+        for (Element element : this.elements) {
             element.leave();
         }
         this.elements.clear();
@@ -39,31 +39,40 @@ public abstract class ListElement {
 
     public abstract void addToPrint(Object object, long time, Element.PositionInBody positionInBody);
 
-    public void sendTask(Object task){
-        for (Element element : this.elements){
+    public void sendTask(Object task) {
+        for (Element element : this.elements) {
             element.doTask(task);
         }
     }
 
-    public Object isOnFocus(float x, float y){
-        for (Element element : this.elements){
-            if (element.isOnFocus(x, y) != null && element.isEmpty() == false){
+    public Object isOnFocus(float x, float y) {
+        for (Element element : this.elements) {
+            if (element.isOnFocus(x, y) != null && element.isEmpty() == false) {
                 return element;
             }
         }
         return null;
     }
 
-    public int containsElement(String id){
-        for (int i = 0; i < this.elements.size(); ++i){
-            if (this.containsHeadId(this.elements.get(i).getId(), id)){
+    public int containsHeadElement(String id) {
+        for (int i = 0; i < this.elements.size(); ++i) {
+            if (this.containsHeadId(this.elements.get(i).getId(), id)) {
                 return i;
             }
         }
         return -1;
     }
 
-    public Element getElement(String id){
+    public int containsElement(String id) {
+        for (int i = 0; i < this.elements.size(); ++i) {
+            if (this.elements.get(i).getId().equals(id)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public Element getElement(String id) {
         for (Element element : this.elements) {
             if (this.containsHeadId(element.getId(), id)) {
                 return element;
@@ -72,17 +81,17 @@ public abstract class ListElement {
         return null;
     }
 
-    public void deleteElement(String id){
-        for (int i = 0; i < this.elements.size(); ++i){
-            if (this.elements.get(i).getId().equals(id)){
+    public void deleteElement(String id) {
+        for (int i = 0; i < this.elements.size(); ++i) {
+            if (this.elements.get(i).getId().equals(id)) {
                 this.elements.remove(i);
                 --i;
             }
         }
     }
 
-    protected boolean containsHeadId(String head, String id){
-        if (head.contains(":")){
+    protected boolean containsHeadId(String head, String id) {
+        if (head.contains(":")) {
             return head.substring(0, head.indexOf(":")).equals(id.substring(0, id.indexOf(":")));
         } else {
             return head.equals(id);
@@ -90,12 +99,12 @@ public abstract class ListElement {
     }
 
     // GETTERS
-    public BodyRect getBody(){
+    public BodyRect getBody() {
         return this.body;
     }
 
     // SETTERS
-    public void setBody(BodyRect body){
+    public void setBody(BodyRect body) {
         this.body = body;
         this.updatePosition();
     }
