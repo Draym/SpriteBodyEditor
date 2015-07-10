@@ -46,6 +46,8 @@ public abstract class Overlay extends Observable implements Observer {
     }
 
     // FUNCTIONS
+    public abstract void enter();
+
     public void leave() {
         for (Map.Entry<EnumOverlayElement, InterfaceElement> entry : this.elements.entrySet()) {
             entry.getValue().leave();

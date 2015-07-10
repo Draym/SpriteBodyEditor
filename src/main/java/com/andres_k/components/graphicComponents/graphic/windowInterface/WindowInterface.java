@@ -66,6 +66,7 @@ public class WindowInterface extends WindowBasedGame {
         this.container.setAlwaysRender(false);
         this.container.setVSync(false);
 
+        this.overlay.enter();
         this.controller.enter();
     }
 

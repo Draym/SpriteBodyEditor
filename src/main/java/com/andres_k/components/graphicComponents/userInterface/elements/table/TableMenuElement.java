@@ -32,9 +32,18 @@ public class TableMenuElement extends TableElement {
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof Pair) {
-            Pair<Integer, Boolean> received = (Pair<Integer, Boolean>) task;
-            if (received.getV1() < this.reachable.length) {
-                this.reachable[received.getV1()] = received.getV2();
+            if (((Pair) task).getV1().equals("clear")){
+                String id = (String) ((Pair) task).getV2();
+
+                Element key = this.containsKey(id);
+                if (key != null){
+                    this.table.get(key).clear();
+                }
+            } else {
+                Pair<Integer, Boolean> received = (Pair<Integer, Boolean>) task;
+                if (received.getV1() < this.reachable.length) {
+                    this.reachable[received.getV1()] = received.getV2();
+                }
             }
         } else if (task instanceof Integer) {
             int i = 0;

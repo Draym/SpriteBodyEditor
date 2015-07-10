@@ -76,6 +76,11 @@ public class InterfaceOverlay extends Overlay {
         this.initTableListFile();
     }
 
+    @Override
+    public void enter() {
+        this.initTableMenuControls();
+    }
+
     private void initTableListFile(){
         InterfaceElement tableList = this.elements.get(EnumOverlayElement.TABLE_LIST);
 
@@ -101,6 +106,7 @@ public class InterfaceOverlay extends Overlay {
         tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer("Controls"), Color.black,
                 EnumOverlayElement.CONTROLS.getValue() + ":" + EnumOverlayElement.CONTROLS.getValue(), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.BUTTON));
 
+        tableMenuControls.doTask(new Pair<>("clear", EnumOverlayElement.CONTROLS.getValue() + ":" + EnumOverlayElement.CONTROLS.getValue()));
         for (Map.Entry<EnumInput, String> entry : InputData.getAvailableInput().entrySet()) {
             tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer(entry.getKey().getValue() + ":" +
                     StringTools.duplicateString(" ", 14 - entry.getKey().getValue().length()) + entry.getValue() +

@@ -5,11 +5,9 @@ import com.andres_k.components.gameComponents.controllers.GameController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.input.EnumInput;
-import com.andres_k.components.graphicComponents.input.InputData;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.GameOverlay;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.WindowConfig;
-import com.andres_k.utils.tools.Debug;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -63,6 +61,7 @@ public class WindowGame extends WindowBasedGame {
         this.container.setAlwaysRender(false);
         this.container.setVSync(false);
 
+        this.overlay.enter();
         this.controller.enter();
     }
 

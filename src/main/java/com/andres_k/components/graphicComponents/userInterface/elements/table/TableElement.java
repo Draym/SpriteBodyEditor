@@ -156,7 +156,7 @@ public class TableElement extends InterfaceElement {
         }
     }
 
-    private boolean checkSameHeadId(String id) {
+    protected boolean checkSameHeadId(String id) {
         if (id.contains(":")) {
             String v1 = id.substring(0, id.indexOf(":"));
             String v2 = id.substring(id.indexOf(":") + 1, id.length());
@@ -165,7 +165,7 @@ public class TableElement extends InterfaceElement {
         return true;
     }
 
-    private boolean containsHeadId(String head, String id) {
+    protected boolean containsHeadId(String head, String id) {
         if (head.contains(":") && id.contains(":")) {
             return head.substring(0, head.indexOf(":")).equals(id.substring(0, id.indexOf(":")));
         } else {
@@ -173,7 +173,7 @@ public class TableElement extends InterfaceElement {
         }
     }
 
-    private Element containsKey(Element item) {
+    protected Element containsKey(Element item) {
         for (Map.Entry<Element, ListElement> entry : this.table.entrySet()) {
             if (this.containsHeadId(entry.getKey().getId(), item.getId())) {
                 return entry.getKey();
@@ -182,7 +182,16 @@ public class TableElement extends InterfaceElement {
         return null;
     }
 
-    private Element containsId(String id) {
+    protected Element containsKey(String id) {
+        for (Map.Entry<Element, ListElement> entry : this.table.entrySet()) {
+            if (this.containsHeadId(entry.getKey().getId(), id)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    protected Element containsId(String id) {
         for (Map.Entry<Element, ListElement> entry : this.table.entrySet()) {
             if (entry.getKey().getId().equals(id)) {
                 return entry.getKey();
@@ -202,7 +211,7 @@ public class TableElement extends InterfaceElement {
         }
     }
 
-    private void initPositionBody() {
+    protected void initPositionBody() {
         float border = 10;
         float currentX = this.body.getMinX();
         float width = this.body.getSizeX() / this.table.size();
@@ -229,7 +238,7 @@ public class TableElement extends InterfaceElement {
         }
     }
 
-    private void initTableBody() {
+    protected void initTableBody() {
         for (Map.Entry<Element, ListElement> entry : this.table.entrySet()) {
             if (this.positionBody.containsKey(entry.getKey().getId())) {
                 entry.getValue().setBody(this.positionBody.get(entry.getKey().getId()).getV2());
