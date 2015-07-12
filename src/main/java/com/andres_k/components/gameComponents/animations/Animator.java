@@ -11,13 +11,15 @@ import java.util.*;
  * Created by andres_k on 13/03/2015.
  */
 public class Animator implements Observer {
+
+    // animations
     private HashMap<EnumAnimation, List<Animation>> animations;
     private ActivatedTimer activatedTimer;
     private EnumAnimation current;
     private Color filter;
-
     private int index;
     private boolean printable;
+
     private boolean deleted;
     private boolean needUpdate;
 
@@ -34,6 +36,7 @@ public class Animator implements Observer {
 
     public Animator(Animator animator) {
         this.animations = new HashMap<>();
+
         for (Map.Entry entry : animator.animations.entrySet()) {
             EnumAnimation type = (EnumAnimation) entry.getKey();
             List<Animation> values = (ArrayList<Animation>) entry.getValue();
@@ -41,8 +44,9 @@ public class Animator implements Observer {
             for (Animation value : values) {
                 newValues.add(value.copy());
             }
-            this.addElement(type, newValues);
+            this.addListAnimation(type, newValues);
         }
+
         this.current = animator.current;
         this.index = animator.index;
         this.printable = animator.printable;
@@ -75,7 +79,7 @@ public class Animator implements Observer {
         }
     }
 
-    public void addElement(EnumAnimation type, List<Animation> animation) {
+    public void addListAnimation(EnumAnimation type, List<Animation> animation) {
         for (Animation anAnimation : animation) {
             this.addAnimation(type, anAnimation);
         }
