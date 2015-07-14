@@ -104,7 +104,9 @@ public class WindowGame extends WindowBasedGame {
 
     @Override
     public void mousePressed(int button, int x, int y) {
-        this.controller.mousePressed(button, x, y);
+        if (!this.overlay.isOnFocus(x, y)) {
+            this.controller.mousePressed(button, x, y);
+        }
     }
 
     @Override
