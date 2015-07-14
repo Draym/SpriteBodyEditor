@@ -36,6 +36,7 @@ public class GameController extends WindowController {
 
     private float upOriginX;
     private float upOriginY;
+    private EnumGameObject current;
 
     public GameController() throws JSONException {
         this.image = null;
@@ -45,6 +46,7 @@ public class GameController extends WindowController {
         this.inputGame = new InputGame();
         this.upOriginX = 0;
         this.upOriginY = 0;
+        this.current = EnumGameObject.RECTANGLE;
     }
 
     @Override
@@ -66,7 +68,11 @@ public class GameController extends WindowController {
             this.image.draw(g);
         if (this.startClick != null && this.endClick != null) {
             g.setColor(Color.pink);
-            g.draw(MathTools.createRectangle(this.startClick, this.endClick));
+            if (this.current == EnumGameObject.RECTANGLE) {
+                g.draw(MathTools.createRectangle(this.startClick, this.endClick));
+            } else if (this.current == EnumGameObject.CIRCLE){
+                g.draw(MathTools.createCircle(this.startClick, this.endClick));
+            }
         }
     }
 
@@ -132,6 +138,10 @@ public class GameController extends WindowController {
             } else if (result == EnumInput.MOVE_UP || result == EnumInput.MOVE_DOWN || result == EnumInput.MOVE_RIGHT || result == EnumInput.MOVE_LEFT) {
                 this.upOriginX = 0;
                 this.upOriginY = 0;
+            } else if (result == EnumInput.RECTANGLE) {
+                this.current = EnumGameObject.RECTANGLE;
+            } else if (result == EnumInput.CIRCLE) {
+                this.current = EnumGameObject.CIRCLE;
             }
             if (type != null) {
                 this.image.changeFocusedType(type);
@@ -144,23 +154,14 @@ public class GameController extends WindowController {
     public void mousePressed(int button, int x, int y) {
         if (this.image != null)
             if (button == 0) {
-                int tmpX = (int)((x + GlobalVariable.originX) / GlobalVariable.zoom);
-                int tmpY = (int)((y + GlobalVariable.originY) / GlobalVariable.zoom);
+                int tmpX = (int) ((x + GlobalVariable.originX) / GlobalVariable.zoom);
+                int tmpY = (int) ((y + GlobalVariable.originY) / GlobalVariable.zoom);
                 this.bodyFocused = this.image.onClick(tmpX, tmpY);
 
                 if (this.bodyFocused != null) {
                     this.startClick = new Pair<>((float) x, (float) y);
                 }
             }
-    }
-
-    @Override
-    public void mouseWheelMove(int newValue) {
-        if (newValue > 0){
-            GlobalVariable.zoom += 0.1;
-        } else if (GlobalVariable.zoom > 0.1){
-            GlobalVariable.zoom -= 0.1;
-        }
     }
 
     @Override
@@ -171,12 +172,24 @@ public class GameController extends WindowController {
             this.endClick.setV1((this.endClick.getV1() + GlobalVariable.originX) / GlobalVariable.zoom);
             this.endClick.setV2((this.endClick.getV2() + GlobalVariable.originY) / GlobalVariable.zoom);
 
-            this.bodyFocused.addRect(MathTools.createRectangle(this.startClick, this.endClick), EnumGameObject.DEFENSE_BODY);
+            if (this.current == EnumGameObject.RECTANGLE) {
+                this.bodyFocused.addRect(MathTools.createRectangle(this.startClick, this.endClick), EnumGameObject.DEFENSE_BODY);
+            } else if (this.current == EnumGameObject.CIRCLE) {
+                this.bodyFocused.addCircle(MathTools.createCircle(this.startClick, this.endClick), EnumGameObject.DEFENSE_BODY);
+            }
             this.startClick = null;
             this.endClick = null;
         }
     }
 
+    @Override
+    public void mouseWheelMove(int newValue) {
+        if (newValue > 0) {
+            GlobalVariable.zoom += 0.1;
+        } else if (GlobalVariable.zoom > 0.1) {
+            GlobalVariable.zoom -= 0.1;
+        }
+    }
 
     public boolean loadJsonFile(String path) throws SlickException, JSONException {
         File file = new File(GlobalVariable.folder + path.substring(0, path.indexOf(".")) + ".json");

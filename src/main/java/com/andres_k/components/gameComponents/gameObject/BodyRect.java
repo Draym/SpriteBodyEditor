@@ -3,6 +3,7 @@ package com.andres_k.components.gameComponents.gameObject;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
+import com.andres_k.utils.tools.Debug;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.Color;
@@ -16,7 +17,7 @@ import org.newdawn.slick.geom.Shape;
  * Created by andres_k on 09/07/2015.
  */
 public class BodyRect {
-  //  private Rectangle body;
+    //  private Rectangle body;
 
 
     private Pair<Float, Float> positions;
@@ -27,13 +28,24 @@ public class BodyRect {
     private Pair<Float, Float> origin;
 
     public BodyRect(Rectangle body, EnumGameObject type, float posX, float posY) {
-    //    this.body = new Rectangle(body.getMinX(), body.getMinY(), body.getWidth(), body.getHeight());
+        //    this.body = new Rectangle(body.getMinX(), body.getMinY(), body.getWidth(), body.getHeight());
 
         this.positions = new Pair<>(body.getMinX(), body.getMinY());
         this.sizes = new Pair<>(body.getWidth(), body.getHeight());
         this.origin = new Pair<>(posX, posY);
         this.type = type;
         this.focused = false;
+    }
+
+    public BodyRect(Circle body, EnumGameObject type, float posX, float posY) {
+        //    this.body = new Rectangle(body.getMinX(), body.getMinY(), body.getWidth(), body.getHeight());
+
+        this.positions = new Pair<>(body.getCenterX(), body.getCenterY());
+        this.sizes = new Pair<>(body.getRadius(), -1f);
+        this.origin = new Pair<>(posX, posY);
+        this.type = type;
+        this.focused = false;
+        Debug.debug("SAVE CIRCLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "]");
     }
 
     public BodyRect(JSONObject object, float posX, float posY) throws JSONException {
@@ -61,6 +73,7 @@ public class BodyRect {
             g.draw(this.getBodyDraw());
         }
     }
+
     public Shape getBody() {
         if (this.sizes.getV2() < 0) {
             return new Circle(this.positions.getV1(), this.positions.getV2(), this.sizes.getV1());
@@ -69,7 +82,7 @@ public class BodyRect {
         }
     }
 
-    public Shape getBodyDraw(){
+    public Shape getBodyDraw() {
         if (this.sizes.getV2() < 0) {
             return new Circle((this.positions.getV1() * GlobalVariable.zoom) - GlobalVariable.originX, (this.positions.getV2() * GlobalVariable.zoom) - GlobalVariable.originY,
                     this.sizes.getV1() * GlobalVariable.zoom);
@@ -80,7 +93,8 @@ public class BodyRect {
     }
 
     public boolean isOnFocus(float x, float y) {
-        if (this.getBody().contains(x, y)) {
+
+        if (this.getBody().contains(x, y) || this.getBody().includes(x, y)) {
             this.focused = true;
         } else {
             this.focused = false;
@@ -107,7 +121,7 @@ public class BodyRect {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         JSONObject object = new JSONObject();
 
         try {

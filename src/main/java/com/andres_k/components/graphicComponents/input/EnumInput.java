@@ -6,6 +6,7 @@ package com.andres_k.components.graphicComponents.input;
 public enum EnumInput {
     NOTHING("NOTHING"),
     RELEASED("RELEASED"), PRESSED("PRESSED"),
+    RECTANGLE("RECTANGLE"), CIRCLE("CIRCLE"),
     MOVE_UP("MOVE_UP"), MOVE_DOWN("MOVE_DOWN"), MOVE_LEFT("MOVE_LEFT"), MOVE_RIGHT("MOVE_RIGHT"),
     ATTACK("ATTACK"), DEFENSE("DEFENSE"), BLOCK("BLOCK"), DELETE("DELETE"),
     OVERLAY_1("OVERLAY_1"), OVERLAY_2("OVERLAY_2");

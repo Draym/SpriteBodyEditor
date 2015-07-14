@@ -7,6 +7,6 @@
   "DEFENSE": "Z",
   "BLOCK": "E",
   "DELETE": "BACK",
-  "OVERLAY_1": "1",
-  "OVERLAY_2": "2"
+  "RECTANGLE": "R",
+  "CIRCLE": "C"
 }

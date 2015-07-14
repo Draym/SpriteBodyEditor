@@ -8,7 +8,9 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,15 +79,21 @@ public class BodySprite {
         return this.spriteBody.contains(x, y);
     }
 
-    public boolean intersect(Rectangle rectangle) {
-        if (this.spriteBody.contains(rectangle.getMinX(), rectangle.getMinY()) && this.spriteBody.contains(rectangle.getMaxX(), rectangle.getMaxY())) {
+    public boolean intersect(Shape object) {
+        if (this.spriteBody.contains(object.getMinX(), object.getMinY()) && this.spriteBody.contains(object.getMaxX(), object.getMaxY())) {
             return false;
         }
         return true;
     }
 
     public void addRect(Rectangle body, EnumGameObject type) {
-        if (body.getWidth() != 0 && body.getWidth() != 0 && !this.intersect(body)) {
+        if (body.getWidth() >= 2 && body.getHeight() >= 2 && !this.intersect(body)) {
+            this.bodies.add(new BodyRect(body, type, this.spriteBody.getMinX(), this.spriteBody.getMinY()));
+        }
+    }
+
+    public void addCircle(Circle body, EnumGameObject type) {
+        if (body.getRadius() >= 2 && !this.intersect(body)) {
             this.bodies.add(new BodyRect(body, type, this.spriteBody.getMinX(), this.spriteBody.getMinY()));
         }
     }

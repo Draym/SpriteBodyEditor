@@ -10,7 +10,9 @@ public enum EnumGameObject {
 
     ATTACK_BODY("attackBody"),
     DEFENSE_BODY("defenseBody"),
-    BLOCK_BODY("blockBody");
+    BLOCK_BODY("blockBody"),
+    RECTANGLE("rectangle"),
+    CIRCLE("circle");
 
 
     private final String value;

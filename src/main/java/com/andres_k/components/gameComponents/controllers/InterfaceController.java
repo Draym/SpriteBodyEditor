@@ -10,6 +10,7 @@ import com.andres_k.components.networkComponents.messages.MessageFileNew;
 import com.andres_k.components.networkComponents.messages.MessageSelectImage;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.utils.configs.Config;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
@@ -153,11 +154,11 @@ public class InterfaceController extends WindowController {
             array.put(entry.getKey());
         }
         object.put("files", array);
-        StringTools.writeInFile("saveFiles.json", object.toString());
+        StringTools.writeInFile(Config.saveFiles, object.toString());
     }
 
     public void initSavedFiles() throws JSONException, SlickException {
-        String saveFiles = StringTools.readFile("saveFiles.json");
+        String saveFiles = StringTools.readFile(Config.saveFiles);
         JSONObject jsonFiles = new JSONObject(saveFiles);
 
         JSONArray arrayFiles = jsonFiles.getJSONArray("files");

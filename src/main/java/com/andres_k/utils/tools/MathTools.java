@@ -2,6 +2,7 @@ package com.andres_k.utils.tools;
 
 
 import com.andres_k.utils.stockage.Pair;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 
 import java.awt.geom.AffineTransform;
@@ -55,5 +56,20 @@ public class MathTools {
             y = p2.getV2();
         }
         return new Rectangle(x, y, sizeX, sizeY);
+    }
+
+    public static double getDistance(Pair<Float, Float> p1, Pair<Float, Float> p2) {
+        return Math.sqrt(((p2.getV1() - p1.getV1()) * (p2.getV1() - p1.getV1())) + ((p2.getV2() - p1.getV2()) * (p2.getV2() - p1.getV2())));
+    }
+
+    public static Circle createCircle(Pair<Float, Float> p1, Pair<Float, Float> p2){
+        double distance = getDistance(p1, p2);
+
+        Circle toto = new Circle(p1.getV1(), p1.getV2(), (float) distance);
+
+
+        Debug.debug("create CIRCLE at [" + p1.getV1() + ", " + p1.getV2() + "] with  {" + distance + "}");
+
+        return toto;
     }
 }
