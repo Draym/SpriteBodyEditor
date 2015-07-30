@@ -32,7 +32,7 @@ public class MasterGame implements Observer {
 
         this.masterTask = new GenericSendTask();
         this.masterTask.addObserver(this);
-        this.windows = new Windows("TinyTank Game", this.masterTask);
+        this.windows = new Windows("Sprite&Body Editor", this.masterTask);
     }
 
     public void start() {
