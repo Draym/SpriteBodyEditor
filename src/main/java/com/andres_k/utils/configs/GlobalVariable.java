@@ -7,6 +7,7 @@ public class GlobalVariable {
     public static float zoom = 1;
     public static float originX = 0;
     public static float originY = 0;
+    public static boolean debug = false;
     public static final String folder = "Sprite&Body/";
 
     public static void init(){

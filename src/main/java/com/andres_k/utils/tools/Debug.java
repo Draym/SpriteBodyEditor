@@ -1,10 +1,13 @@
 package com.andres_k.utils.tools;
 
+import com.andres_k.utils.configs.GlobalVariable;
+
 /**
  * Created by andres_k on 13/03/2015.
  */
 public class Debug {
     public static void debug(String message){
-        System.out.println(message);
+        if (GlobalVariable.debug)
+            System.out.println(message);
     }
 }

@@ -88,12 +88,11 @@ public class BodyRect {
     }
 
     public boolean isOnFocus(float x, float y) {
-
-        if (this.getBody().contains(x, y) || this.getBody().includes(x, y)) {
+        this.focused = false;
+        Shape body = this.getBody();
+        if (x >= body.getMinX() && y >= body.getMinY()
+                && x <= body.getMaxX() && y <= body.getMaxY())
             this.focused = true;
-        } else {
-            this.focused = false;
-        }
         return this.focused;
     }
 

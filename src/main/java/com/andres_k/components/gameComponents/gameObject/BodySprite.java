@@ -34,7 +34,7 @@ public class BodySprite {
         this.body = new Rectangle((float) object.getDouble("BodyPosX"), (float) object.getDouble("BodyPosY"), (float) object.getDouble("BodySizeX"), (float) object.getDouble("BodySizeY"));
         JSONArray array = object.getJSONArray("rectangles");
 
-        for (int i = 0; i < array.length(); ++i){
+        for (int i = 0; i < array.length(); ++i) {
             this.bodies.add(new BodyRect(array.getJSONObject(i), this.sprite.getMinX(), this.sprite.getMinY()));
         }
     }
@@ -78,31 +78,42 @@ public class BodySprite {
                 }
             }
         }
-        return this.sprite.contains(x, y);
+        return this.isInSprite(x, y);
     }
 
-    public boolean intersectBody(Shape object) {
-        return !(this.sprite.contains(object.getMinX(), object.getMinY()) && this.sprite.contains(object.getMaxX(), object.getMaxY()));
+    public boolean isInBody(Shape object) {
+        return (object.getMinX() >= this.body.getMinX() && object.getMinY() >= this.body.getMinY()
+                && object.getMaxX() <= this.body.getMaxX() && object.getMaxY() <= this.body.getMaxY());
     }
 
-    public boolean intersectSprite(Shape object) {
-        return !(this.sprite.contains(object.getMinX(), object.getMinY()) && this.sprite.contains(object.getMaxX(), object.getMaxY()));
+    public boolean isInSprite(Shape object) {
+        Debug.debug("minX: " + object.getMinX() + " >= ? " + this.sprite.getMinX());
+        Debug.debug("minY: " + object.getMinY() + " >= ? " + this.sprite.getMinY());
+        Debug.debug("maxX: " + object.getMaxX() + " <= ? " + this.sprite.getMaxX());
+        Debug.debug("maxY: " + object.getMaxY() + " <= ? " + this.sprite.getMaxY());
+        return (object.getMinX() >= this.sprite.getMinX() && object.getMinY() >= this.sprite.getMinY()
+                && object.getMaxX() < this.sprite.getMaxX() && object.getMaxY() < this.sprite.getMaxY());
+    }
+
+    public boolean isInSprite(float x, float y) {
+        return (x >= this.sprite.getMinX() && y >= this.sprite.getMinY()
+                && x < this.sprite.getMaxX() && y < this.sprite.getMaxY());
     }
 
     public void changeBody(Rectangle body) {
-        if (body.getWidth() >= 1 && body.getHeight() >= 1 && !this.intersectSprite(body)) {
+        if (body.getWidth() >= 1 && body.getHeight() >= 1 && isInSprite(body)) {
             this.body = body;
         }
     }
 
     public void addRect(Rectangle body, EnumGameObject type) {
-        if (body.getWidth() >= 1 && body.getHeight() >= 1 && !this.intersectBody(body)) {
+        if (body.getWidth() >= 1 && body.getHeight() >= 1 && this.isInBody(body)) {
             this.bodies.add(new BodyRect(body, type, this.sprite.getMinX(), this.sprite.getMinY()));
         }
     }
 
     public void addCircle(Circle body, EnumGameObject type) {
-        if (body.getRadius() >= 2 && !this.intersectBody(body)) {
+        if (body.getRadius() >= 2 && this.isInBody(body)) {
             this.bodies.add(new BodyRect(body, type, this.sprite.getMinX(), this.sprite.getMinY()));
         }
     }
@@ -117,8 +128,8 @@ public class BodySprite {
             object.put("SpriteSizeX", this.sprite.getWidth());
             object.put("SpriteSizeY", this.sprite.getHeight());
 
-            object.put("BodyPosX", this.body.getMinX());
-            object.put("BodyPosY", this.body.getMinY());
+            object.put("BodyPosX", this.body.getMinX() - this.sprite.getMinX());
+            object.put("BodyPosY", this.body.getMinY() - this.sprite.getMinY());
             object.put("BodySizeX", this.body.getWidth());
             object.put("BodySizeY", this.body.getHeight());
             JSONArray arrayRect = new JSONArray();

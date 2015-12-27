@@ -36,6 +36,7 @@ public class GameController extends WindowController {
 
     private float upOriginX;
     private float upOriginY;
+    private float multDecal;
     private EnumGameObject current;
 
     public GameController() throws JSONException {
@@ -46,6 +47,7 @@ public class GameController extends WindowController {
         this.inputGame = new InputGame();
         this.upOriginX = 0;
         this.upOriginY = 0;
+        this.multDecal = 1;
         this.current = EnumGameObject.RECTANGLE;
     }
 
@@ -100,8 +102,10 @@ public class GameController extends WindowController {
     }
 
     public void updateSliding() {
-        GlobalVariable.originX += (this.upOriginX / GlobalVariable.zoom);
-        GlobalVariable.originY += (this.upOriginY / GlobalVariable.zoom);
+        if (this.upOriginX != 0 && this.upOriginY != 0)
+            this.multDecal += 0.1;
+        GlobalVariable.originX += ((this.upOriginX * this.multDecal) / GlobalVariable.zoom);
+        GlobalVariable.originY += ((this.upOriginY * this.multDecal) / GlobalVariable.zoom);
     }
 
     @Override
@@ -110,15 +114,15 @@ public class GameController extends WindowController {
 
         if (result == EnumInput.MOVE_UP) {
             this.upOriginX = 0;
-            this.upOriginY = -5;
+            this.upOriginY = -5 * GlobalVariable.zoom;
         } else if (result == EnumInput.MOVE_DOWN) {
             this.upOriginX = 0;
-            this.upOriginY = 5;
+            this.upOriginY = 5 * GlobalVariable.zoom;
         } else if (result == EnumInput.MOVE_RIGHT) {
-            this.upOriginX = 5;
+            this.upOriginX = 5 * GlobalVariable.zoom;
             this.upOriginY = 0;
         } else if (result == EnumInput.MOVE_LEFT) {
-            this.upOriginX = -5;
+            this.upOriginX = -5 * GlobalVariable.zoom;
             this.upOriginY = 0;
         }
     }
@@ -141,6 +145,7 @@ public class GameController extends WindowController {
             } else if (result == EnumInput.MOVE_UP || result == EnumInput.MOVE_DOWN || result == EnumInput.MOVE_RIGHT || result == EnumInput.MOVE_LEFT) {
                 this.upOriginX = 0;
                 this.upOriginY = 0;
+                this.multDecal = 1;
             } else if (result == EnumInput.RECTANGLE) {
                 this.current = EnumGameObject.RECTANGLE;
             } else if (result == EnumInput.CIRCLE) {
@@ -152,7 +157,6 @@ public class GameController extends WindowController {
                 this.image.changeFocusedType(type);
             }
         }
-
     }
 
     @Override
@@ -192,9 +196,9 @@ public class GameController extends WindowController {
     @Override
     public void mouseWheelMove(int newValue) {
         if (newValue > 0) {
-            GlobalVariable.zoom += 0.1;
+            GlobalVariable.zoom += 0.15;
         } else if (GlobalVariable.zoom > 0.1) {
-            GlobalVariable.zoom -= 0.1;
+            GlobalVariable.zoom -= 0.15;
         }
     }
 
