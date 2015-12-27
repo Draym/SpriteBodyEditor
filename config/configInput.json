@@ -8,5 +8,6 @@
   "BLOCK": "E",
   "DELETE": "BACK",
   "RECTANGLE": "R",
-  "CIRCLE": "C"
+  "CIRCLE": "C",
+  "BODY": "B"
 }

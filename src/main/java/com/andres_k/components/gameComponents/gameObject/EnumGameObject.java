@@ -12,7 +12,8 @@ public enum EnumGameObject {
     DEFENSE_BODY("defenseBody"),
     BLOCK_BODY("blockBody"),
     RECTANGLE("rectangle"),
-    CIRCLE("circle");
+    CIRCLE("circle"),
+    BODY("body");
 
 
     private final String value;

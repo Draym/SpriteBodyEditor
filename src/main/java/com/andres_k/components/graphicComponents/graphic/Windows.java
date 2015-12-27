@@ -52,11 +52,6 @@ public class Windows extends StateBasedGame implements Observer {
         Debug.debug("states: " + this.getStateCount());
     }
 
-    @Override
-    public boolean closeRequested() {
-        return false;
-    }
-
     public void update(Observable o, Object arg) {
         Debug.debug("WINDOWS Received: " + arg);
         if (arg instanceof Tuple) {

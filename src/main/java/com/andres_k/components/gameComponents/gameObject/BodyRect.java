@@ -28,31 +28,26 @@ public class BodyRect {
     private Pair<Float, Float> origin;
 
     public BodyRect(Rectangle body, EnumGameObject type, float posX, float posY) {
-        //    this.body = new Rectangle(body.getMinX(), body.getMinY(), body.getWidth(), body.getHeight());
-
         this.positions = new Pair<>(body.getMinX(), body.getMinY());
         this.sizes = new Pair<>(body.getWidth(), body.getHeight());
         this.origin = new Pair<>(posX, posY);
         this.type = type;
         this.focused = false;
+        Debug.debug("SAVE RECTANGLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "}");
     }
 
     public BodyRect(Circle body, EnumGameObject type, float posX, float posY) {
-        //    this.body = new Rectangle(body.getMinX(), body.getMinY(), body.getWidth(), body.getHeight());
-
         this.positions = new Pair<>(body.getCenterX(), body.getCenterY());
         this.sizes = new Pair<>(body.getRadius(), -1f);
         this.origin = new Pair<>(posX, posY);
         this.type = type;
         this.focused = false;
-        Debug.debug("SAVE CIRCLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "]");
+        Debug.debug("SAVE CIRCLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "}");
     }
 
     public BodyRect(JSONObject object, float posX, float posY) throws JSONException {
         this.type = EnumGameObject.getEnumByValue(object.getString("type"));
         this.origin = new Pair<>(posX, posY);
-
-//        this.body = new Rectangle((float) object.getDouble("posX") + origin.getV1(), (float) object.getDouble("posY") + origin.getV2(), (float) object.getDouble("sizeX"), (float) object.getDouble("sizeY"));
 
         this.positions = new Pair<>((float) object.getDouble("posX") + this.origin.getV1(), (float) object.getDouble("posY") + this.origin.getV2());
         this.sizes = new Pair<>((float) object.getDouble("sizeX"), (float) object.getDouble("sizeY"));
@@ -69,7 +64,7 @@ public class BodyRect {
         } else if (this.type == EnumGameObject.BLOCK_BODY) {
             g.setColor(Color.green);
         }
-        if (!focused) {
+        if (!this.focused) {
             g.draw(this.getBodyDraw());
         }
     }

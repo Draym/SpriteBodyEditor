@@ -56,6 +56,7 @@ public class GameController extends WindowController {
 
     @Override
     public void leave() {
+        this.image.saveInFile();
     }
 
     @Override
@@ -70,8 +71,10 @@ public class GameController extends WindowController {
             g.setColor(Color.pink);
             if (this.current == EnumGameObject.RECTANGLE) {
                 g.draw(MathTools.createRectangle(this.startClick, this.endClick));
-            } else if (this.current == EnumGameObject.CIRCLE){
+            } else if (this.current == EnumGameObject.CIRCLE) {
                 g.draw(MathTools.createCircle(this.startClick, this.endClick));
+            } else if (this.current == EnumGameObject.BODY) {
+                g.draw(MathTools.createRectangle(this.startClick, this.endClick));
             }
         }
     }
@@ -142,6 +145,8 @@ public class GameController extends WindowController {
                 this.current = EnumGameObject.RECTANGLE;
             } else if (result == EnumInput.CIRCLE) {
                 this.current = EnumGameObject.CIRCLE;
+            } else if (result == EnumInput.BODY) {
+                this.current = EnumGameObject.BODY;
             }
             if (type != null) {
                 this.image.changeFocusedType(type);
@@ -176,6 +181,8 @@ public class GameController extends WindowController {
                 this.bodyFocused.addRect(MathTools.createRectangle(this.startClick, this.endClick), EnumGameObject.DEFENSE_BODY);
             } else if (this.current == EnumGameObject.CIRCLE) {
                 this.bodyFocused.addCircle(MathTools.createCircle(this.startClick, this.endClick), EnumGameObject.DEFENSE_BODY);
+            } else if (this.current == EnumGameObject.BODY) {
+                this.bodyFocused.changeBody(MathTools.createRectangle(this.startClick, this.endClick));
             }
             this.startClick = null;
             this.endClick = null;

@@ -14,6 +14,7 @@ import com.andres_k.utils.configs.Config;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.utils.tools.Debug;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -87,6 +88,11 @@ public class InterfaceController extends WindowController {
                 this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_LIST,
                         new StringElement(null, Color.black, EnumOverlayElement.TABLE_LIST.getValue() + ":" + this.currentPath, Element.PositionInBody.MIDDLE_MID))));
                 this.files.remove(this.currentPath);
+                try {
+                    this.saveFilesInFile();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 this.currentPath = null;
                 this.currentImage = null;
             }
@@ -153,6 +159,7 @@ public class InterfaceController extends WindowController {
         for (Map.Entry<String, Image> entry : this.files.entrySet()) {
             array.put(entry.getKey());
         }
+        Debug.debug("Save Files: " + array);
         object.put("files", array);
         StringTools.writeInFile(Config.saveFiles, object.toString());
     }
@@ -163,6 +170,7 @@ public class InterfaceController extends WindowController {
 
         JSONArray arrayFiles = jsonFiles.getJSONArray("files");
 
+        Debug.debug("Get SavedFiles: " + arrayFiles);
         for (int i = 0; i < arrayFiles.length(); ++i) {
             this.files.put(arrayFiles.getString(i), null);
         }
