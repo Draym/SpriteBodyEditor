@@ -31,7 +31,7 @@ public class BodySprite {
     public BodySprite(JSONObject object) throws JSONException {
         this.bodies = new ArrayList<>();
         this.sprite = new Rectangle((float) object.getDouble("SpritePosX"), (float) object.getDouble("SpritePosY"), (float) object.getDouble("SpriteSizeX"), (float) object.getDouble("SpriteSizeY"));
-        this.body = new Rectangle((float) object.getDouble("BodyPosX"), (float) object.getDouble("BodyPosY"), (float) object.getDouble("BodySizeX"), (float) object.getDouble("BodySizeY"));
+        this.body = new Rectangle((float) object.getDouble("BodyPosX") + this.sprite.getMinX(), (float) object.getDouble("BodyPosY") + this.sprite.getMinY(), (float) object.getDouble("BodySizeX"), (float) object.getDouble("BodySizeY"));
         JSONArray array = object.getJSONArray("rectangles");
 
         for (int i = 0; i < array.length(); ++i) {
