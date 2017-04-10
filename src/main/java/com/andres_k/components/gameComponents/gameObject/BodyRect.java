@@ -28,7 +28,11 @@ public class BodyRect {
     private Pair<Float, Float> origin;
 
     public BodyRect(Rectangle body, EnumGameObject type, float posX, float posY) {
-        this.positions = new Pair<>(body.getMinX(), body.getMinY());
+        this(body, type, posX, posY, 0, 0);
+    }
+
+    public BodyRect(Rectangle body, EnumGameObject type, float posX, float posY, float addX, float addY) {
+        this.positions = new Pair<>(body.getMinX() + addX, body.getMinY() + addY);
         this.sizes = new Pair<>(body.getWidth(), body.getHeight());
         this.origin = new Pair<>(posX, posY);
         this.type = type;
@@ -37,7 +41,11 @@ public class BodyRect {
     }
 
     public BodyRect(Circle body, EnumGameObject type, float posX, float posY) {
-        this.positions = new Pair<>(body.getCenterX(), body.getCenterY());
+        this(body, type, posX, posY, 0, 0);
+    }
+
+    public BodyRect(Circle body, EnumGameObject type, float posX, float posY, float addX, float addY) {
+        this.positions = new Pair<>(body.getCenterX() + addX, body.getCenterY()+ addY);
         this.sizes = new Pair<>(body.getRadius(), -1f);
         this.origin = new Pair<>(posX, posY);
         this.type = type;
@@ -77,6 +85,14 @@ public class BodyRect {
         }
     }
 
+    public Shape getOriginBody() {
+        if (this.sizes.getV2() < 0) {
+            return new Circle(this.positions.getV1() - this.origin.getV1(), this.positions.getV2() - this.origin.getV2(), this.sizes.getV1());
+        } else {
+            return new Rectangle(this.positions.getV1() - this.origin.getV1(), this.positions.getV2() - this.origin.getV2(), this.sizes.getV1(), this.sizes.getV2());
+        }
+    }
+
     public Shape getBodyDraw() {
         if (this.sizes.getV2() < 0) {
             return new Circle((this.positions.getV1() * GlobalVariable.zoom) - GlobalVariable.originX, (this.positions.getV2() * GlobalVariable.zoom) - GlobalVariable.originY,
@@ -88,12 +104,17 @@ public class BodyRect {
     }
 
     public boolean isOnFocus(float x, float y) {
-        this.focused = false;
+        boolean focus = false;
         Shape body = this.getBody();
         if (x >= body.getMinX() && y >= body.getMinY()
                 && x <= body.getMaxX() && y <= body.getMaxY())
-            this.focused = true;
-        return this.focused;
+            focus = true;
+        if (this.focused && focus) {
+            this.focused = false;
+        } else {
+            this.focused = focus;
+        }
+        return focus;
     }
 
     // GETTERS
@@ -103,6 +124,18 @@ public class BodyRect {
 
     public EnumGameObject getType() {
         return this.type;
+    }
+
+    public Pair<Float, Float> getOrigin() {
+        return this.origin;
+    }
+
+    public Pair<Float, Float> getPositions() {
+        return this.positions;
+    }
+
+    public Pair<Float, Float> getSizes() {
+        return this.sizes;
     }
 
     // SETTERS

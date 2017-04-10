@@ -1,13 +1,1 @@
-{
-  "MOVE_UP": "UP",
-  "MOVE_DOWN": "DOWN",
-  "MOVE_LEFT": "LEFT",
-  "MOVE_RIGHT": "RIGHT",
-  "ATTACK": "A",
-  "DEFENSE": "Z",
-  "BLOCK": "E",
-  "DELETE": "BACK",
-  "RECTANGLE": "R",
-  "CIRCLE": "C",
-  "BODY": "B"
-}
+{"MOVE_UP":"T","MOVE_DOWN":"G","MOVE_LEFT":"F","MOVE_RIGHT":"H","ATTACK":"A","DEFENSE":"Z","BLOCK":"E","DELETE":"BACK","COPY": "C", "PASTE":"V", "RECTANGLE":"R","CIRCLE":"C","BODY":"B"}

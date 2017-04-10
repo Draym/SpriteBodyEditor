@@ -152,6 +152,10 @@ public class GameController extends WindowController {
                 this.current = EnumGameObject.CIRCLE;
             } else if (result == EnumInput.BODY) {
                 this.current = EnumGameObject.BODY;
+            } else if (result == EnumInput.COPY) {
+                this.image.copyBodyRect();
+            } else if (result == EnumInput.PASTE) {
+                this.image.pasteBodyRect(this.bodyFocused);
             }
             if (type != null) {
                 this.image.changeFocusedType(type);

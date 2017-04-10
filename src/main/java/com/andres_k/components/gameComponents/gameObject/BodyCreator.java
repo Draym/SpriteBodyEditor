@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.utils.tools.Debug;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -22,6 +23,7 @@ public class BodyCreator {
     private float sizeXSprite;
     private float sizeYSprite;
     private List<BodySprite> bodies;
+    private List<BodyRect> bodyRectCopy;
 
     public BodyCreator(String path, Image image, float sizeX, float sizeY) {
         this.path = path;
@@ -29,6 +31,7 @@ public class BodyCreator {
         this.sizeXSprite = sizeX;
         this.sizeYSprite = sizeY;
         this.bodies = new ArrayList<>();
+        this.bodyRectCopy = new ArrayList<>();
         for (int i = 0; (i + this.sizeYSprite) <= this.image.getHeight(); i += this.sizeYSprite) {
             for (int i2 = 0; (i2 + this.sizeXSprite) <= this.image.getWidth(); i2 += this.sizeXSprite) {
                 this.bodies.add(new BodySprite(new Rectangle(i2, i, this.sizeXSprite, this.sizeYSprite)));
@@ -38,6 +41,7 @@ public class BodyCreator {
 
     public BodyCreator(JSONObject object) throws JSONException, SlickException {
         this.bodies = new ArrayList<>();
+        this.bodyRectCopy = new ArrayList<>();
         this.path = object.getString("path");
         this.image = new Image(GlobalVariable.folder + this.path);
         this.sizeXSprite = (float) object.getDouble("spriteSizeX");
@@ -57,9 +61,7 @@ public class BodyCreator {
     }
 
     public void update() {
-        for (BodySprite body : this.bodies) {
-            body.update();
-        }
+        this.bodies.forEach(BodySprite::update);
     }
 
     public void changeFocusedType(EnumGameObject type) {
@@ -68,6 +70,24 @@ public class BodyCreator {
                 return;
             }
         }
+    }
+
+    public void copyBodyRect() {
+        Debug.debug("try to copy");
+        this.bodyRectCopy.clear();
+        for (BodySprite body : this.bodies) {
+            List<BodyRect> result = body.getFocusedBodyRect();
+            if (result != null) {
+                Debug.debug("--> copy one");
+                this.bodyRectCopy.addAll(result);
+                break;
+            }
+        }
+    }
+
+    public void pasteBodyRect(BodySprite item) {
+        Debug.debug("try to paste: " + this.bodyRectCopy.size());
+        item.addBodyRect(this.bodyRectCopy);
     }
 
     public BodySprite onClick(float x, float y) {

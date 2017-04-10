@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by andres_k on 09/07/2015.
@@ -106,6 +107,11 @@ public class BodySprite {
         }
     }
 
+    public void addBodyRect(List<BodyRect> bodies) {
+        this.bodies.addAll(bodies.stream().map(body -> new BodyRect((Rectangle) body.getOriginBody(), body.getType(), this.sprite.getMinX(), this.sprite.getMinY(), this.sprite.getMinX(), this.sprite.getMinY())).collect(Collectors.toList()));
+    }
+
+
     public void addRect(Rectangle body, EnumGameObject type) {
         if (body.getWidth() >= 1 && body.getHeight() >= 1 && this.isInBody(body)) {
             this.bodies.add(new BodyRect(body, type, this.sprite.getMinX(), this.sprite.getMinY()));
@@ -116,6 +122,11 @@ public class BodySprite {
         if (body.getRadius() >= 2 && this.isInBody(body)) {
             this.bodies.add(new BodyRect(body, type, this.sprite.getMinX(), this.sprite.getMinY()));
         }
+    }
+
+    public List<BodyRect> getFocusedBodyRect() {
+        List<BodyRect> result = this.bodies.stream().filter(BodyRect::isFocused).collect(Collectors.toList());
+        return (result.size() != 0 ? result : null);
     }
 
     @Override

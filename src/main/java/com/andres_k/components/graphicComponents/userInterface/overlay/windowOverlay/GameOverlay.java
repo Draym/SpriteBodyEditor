@@ -56,7 +56,7 @@ public class GameOverlay extends Overlay {
                 new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 200, (WindowConfig.getSizeY() / 2) - 250, 400, 200))));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_CONTROLS, new TableMenuElement(EnumOverlayElement.TABLE_MENU_CONTROLS, this.genericSendTask,
-                new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 150, (WindowConfig.getSizeY() / 2) - 300, 400, 300), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE))));
+                new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 150, (WindowConfig.getSizeY() / 2) - 300, 400, 500), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE))));
         this.elements.put(EnumOverlayElement.TABLE_MENU_SETTINGS, new GenericElement(EnumOverlayElement.TABLE_MENU_SETTINGS,
                 new BodyRect(new Rectangle((WindowConfig.getSizeX() / 2) - 150, (WindowConfig.getSizeY() / 2) - 300, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
