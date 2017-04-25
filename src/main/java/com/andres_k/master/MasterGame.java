@@ -55,7 +55,7 @@ public class MasterGame implements Observer {
     public void update(Observable o, Object arg) {
         Tuple<EnumTargetTask, EnumTargetTask, Object> task = (Tuple<EnumTargetTask, EnumTargetTask, Object>) arg;
 
-        //Debug.debug("masterTask " + task);
+        //Console.debug("masterTask " + task);
         if (task.getV2().isIn(EnumTargetTask.WINDOWS)){
             this.windows.doTask(o, task);
         }

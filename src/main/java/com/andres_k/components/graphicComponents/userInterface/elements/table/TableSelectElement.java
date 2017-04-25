@@ -12,7 +12,7 @@ import com.andres_k.components.networkComponents.messages.MessageSelectImage;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -72,7 +72,7 @@ public class TableSelectElement extends InterfaceElement {
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof Pair) {
-            Debug.debug("Table received: " + task);
+            Console.debug("Table received: " + task);
             if (((Pair) task).getV1() instanceof Integer) {
                 Pair<Integer, Boolean> received = (Pair<Integer, Boolean>) task;
                 if (received.getV1() < this.reachable.length) {
@@ -82,7 +82,7 @@ public class TableSelectElement extends InterfaceElement {
                 Pair<EnumOverlayElement, Object> received = (Pair<EnumOverlayElement, Object>) task;
                 Element element = this.containsId(received.getV1().getValue());
 
-                Debug.debug("find element: " + element + "\n");
+                Console.debug("find element: " + element + "\n");
                 if (element != null) {
                     element.doTask(received.getV2());
                 }
@@ -158,7 +158,7 @@ public class TableSelectElement extends InterfaceElement {
     public void addElement(Element item) {
         Element key = this.containsKey(item);
         if (key != null) {
-//            Debug.debug("add elem: '" + item.toString() + "'");
+//            Console.debug("add elem: '" + item.toString() + "'");
             if (checkSameHeadId(item.getId())) {
                 key.replace(item);
             } else {
@@ -180,7 +180,7 @@ public class TableSelectElement extends InterfaceElement {
                 } else {
                     return;
                 }
-//                Debug.debug("add table: " + item.toString());
+//                Console.debug("add table: " + item.toString());
                 this.initPositionBody();
                 this.initTableBody();
             }

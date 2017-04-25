@@ -14,7 +14,7 @@ import com.andres_k.utils.configs.Config;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -81,7 +81,11 @@ public class InterfaceController extends WindowController {
     @Override
     public void keyReleased(int key, char c) {
         if (key == Input.KEY_ENTER && this.currentPath != null) {
-            this.launchWithPath(new MessageFileLoad("admin", "admin", this.currentPath));
+            if (StringTools.validFile(GlobalVariable.folder + this.currentPath.substring(0, this.currentPath.indexOf(".")) + ".json")) {
+                this.launchWithPath(new MessageFileLoad("admin", "admin", this.currentPath));
+            } else {
+
+            }
         } else if (key == Input.KEY_BACK || key == Input.KEY_DELETE){
             if (this.files.containsKey(this.currentPath)){
                 this.setChanged();
@@ -159,7 +163,7 @@ public class InterfaceController extends WindowController {
         for (Map.Entry<String, Image> entry : this.files.entrySet()) {
             array.put(entry.getKey());
         }
-        Debug.debug("Save Files: " + array);
+        Console.debug("Save Files: " + array);
         object.put("files", array);
         StringTools.writeInFile(Config.saveFiles, object.toString());
     }
@@ -170,7 +174,7 @@ public class InterfaceController extends WindowController {
 
         JSONArray arrayFiles = jsonFiles.getJSONArray("files");
 
-        Debug.debug("Get SavedFiles: " + arrayFiles);
+        Console.debug("Get SavedFiles: " + arrayFiles);
         for (int i = 0; i < arrayFiles.length(); ++i) {
             this.files.put(arrayFiles.getString(i), null);
         }

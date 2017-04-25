@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -73,12 +73,12 @@ public class BodyCreator {
     }
 
     public void copyBodyRect() {
-        Debug.debug("try to copy");
+        Console.debug("try to copy");
         this.bodyRectCopy.clear();
         for (BodySprite body : this.bodies) {
             List<BodyRect> result = body.getFocusedBodyRect();
             if (result != null) {
-                Debug.debug("--> copy one");
+                Console.debug("--> copy one");
                 this.bodyRectCopy.addAll(result);
                 break;
             }
@@ -86,7 +86,7 @@ public class BodyCreator {
     }
 
     public void pasteBodyRect(BodySprite item) {
-        Debug.debug("try to paste: " + this.bodyRectCopy.size());
+        Console.debug("try to paste: " + this.bodyRectCopy.size());
         item.addBodyRect(this.bodyRectCopy);
     }
 

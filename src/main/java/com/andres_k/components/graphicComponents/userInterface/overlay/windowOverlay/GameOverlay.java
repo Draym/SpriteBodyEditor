@@ -24,7 +24,7 @@ import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ColorTools;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Color;
@@ -153,27 +153,27 @@ public class GameOverlay extends Overlay {
 
             if (received.getV1().equals(EnumTargetTask.WINDOWS) && received.getV2().isIn(EnumTargetTask.GAME_OVERLAY)) {
 
-                Debug.debug("OVERLAY RECEIVED tuple: " + arg);
+                Console.debug("OVERLAY RECEIVED tuple: " + arg);
                 if (received.getV3() instanceof Pair && ((Pair) received.getV3()).getV1() instanceof EnumOverlayElement) {
                     Pair<EnumOverlayElement, Object> task = (Pair<EnumOverlayElement, Object>) received.getV3();
 
                     List<EnumOverlayElement> targets = new ArrayList<>();
                     targets.addAll(EnumOverlayElement.getChildren(task.getV1()));
                     for (EnumOverlayElement target : targets) {
-                        Debug.debug("CHIDL: " + targets.size() + " -> send to " + target);
+                        Console.debug("CHIDL: " + targets.size() + " -> send to " + target);
                         if (this.elements.containsKey(target)) {
                             this.elements.get(target).doTask(task.getV2());
                         }
                     }
                 } else {
-                    Debug.debug("\n*************\nWARNING!\nyou shouldn't call this method like this : " + received.getV3());
+                    Console.debug("\n*************\nWARNING!\nyou shouldn't call this method like this : " + received.getV3());
                     for (Map.Entry<EnumOverlayElement, InterfaceElement> entry : this.elements.entrySet()) {
                         entry.getValue().doTask(received.getV3());
                     }
                 }
             }
         } else if (arg instanceof Pair) {
-            Debug.debug("OVERLAY RECEIVED pair: " + arg);
+            Console.debug("OVERLAY RECEIVED pair: " + arg);
             if (((Pair) arg).getV1() instanceof EnumOverlayElement && ((Pair) arg).getV2() instanceof EnumOverlayElement) {
                 Pair<EnumOverlayElement, EnumOverlayElement> received = (Pair<EnumOverlayElement, EnumOverlayElement>) arg;
 
@@ -210,7 +210,7 @@ public class GameOverlay extends Overlay {
     }
 
     public boolean event(int key, char c, EnumInput type) {
-        //Debug.debug("\n NEW EVENT: " + Input.getKeyName(key) + " (" + type + ")");
+        //Console.debug("\n NEW EVENT: " + Input.getKeyName(key) + " (" + type + ")");
         for (Map.Entry<EnumOverlayElement, InterfaceElement> entry : this.elements.entrySet()) {
             boolean[] reachable = entry.getValue().getReachable();
             if (reachable[this.current]) {
@@ -233,7 +233,7 @@ public class GameOverlay extends Overlay {
 
                     if (task.getV1() instanceof EnumInput && task.getV2() instanceof String) {
 
-                        Debug.debug("change input");
+                        Console.debug("change input");
                         if (InputData.setAvailableInput((EnumInput) task.getV1(), (String) task.getV2())) {
                             this.elements.get(EnumOverlayElement.TABLE_MENU_CONTROLS).doTask(task.getV2());
                         }

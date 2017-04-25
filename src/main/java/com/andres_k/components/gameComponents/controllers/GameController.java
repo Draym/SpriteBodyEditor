@@ -58,7 +58,9 @@ public class GameController extends WindowController {
 
     @Override
     public void leave() {
-        this.image.saveInFile();
+        if (this.image != null) {
+            this.image.saveInFile();
+        }
     }
 
     @Override

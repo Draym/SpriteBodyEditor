@@ -68,7 +68,7 @@ public class MathTools {
         Circle toto = new Circle(p1.getV1(), p1.getV2(), (float) distance);
 
 
-        Debug.debug("create CIRCLE at [" + p1.getV1() + ", " + p1.getV2() + "] with  {" + distance + "}");
+        Console.debug("create CIRCLE at [" + p1.getV1() + ", " + p1.getV2() + "] with  {" + distance + "}");
 
         return toto;
     }

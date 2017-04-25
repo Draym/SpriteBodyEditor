@@ -3,7 +3,7 @@ package com.andres_k.components.gameComponents.gameObject;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.Color;
@@ -37,7 +37,7 @@ public class BodyRect {
         this.origin = new Pair<>(posX, posY);
         this.type = type;
         this.focused = false;
-        Debug.debug("SAVE RECTANGLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "}");
+        Console.debug("SAVE RECTANGLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "}");
     }
 
     public BodyRect(Circle body, EnumGameObject type, float posX, float posY) {
@@ -50,7 +50,7 @@ public class BodyRect {
         this.origin = new Pair<>(posX, posY);
         this.type = type;
         this.focused = false;
-        Debug.debug("SAVE CIRCLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "}");
+        Console.debug("SAVE CIRCLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "}");
     }
 
     public BodyRect(JSONObject object, float posX, float posY) throws JSONException {

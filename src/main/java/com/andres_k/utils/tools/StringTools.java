@@ -1,5 +1,7 @@
 package com.andres_k.utils.tools;
 
+import com.andres_k.utils.configs.GlobalVariable;
+
 import java.io.*;
 
 /**
@@ -8,10 +10,16 @@ import java.io.*;
 
 public class StringTools {
 
+    public static boolean validFile(String path) {
+        File file = new File(path);
+
+        return (file.exists() && !file.isDirectory());
+    }
+
     public static String readFile(String fileName) {
         String content = "";
         File file = new File(fileName); //for ex foo.txt
-        Debug.debug("file: " + file.getAbsolutePath());
+        Console.debug("file: " + file.getAbsolutePath());
         try {
             FileReader reader = new FileReader(file);
             char[] chars = new char[(int) file.length()];

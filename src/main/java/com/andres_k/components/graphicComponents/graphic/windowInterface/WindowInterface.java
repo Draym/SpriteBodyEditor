@@ -7,7 +7,7 @@ import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.InterfaceOverlay;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.WindowConfig;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -52,7 +52,7 @@ public class WindowInterface extends WindowBasedGame {
         this.controller.setStateWindow(this.stateWindow);
         this.controller.setWindow(this);
         this.controller.init();
-        Debug.debug("end init Interface");
+        Console.debug("end init Interface");
 
         this.background = new Image("image/background.png");
         this.title = new Image("image/title.png");

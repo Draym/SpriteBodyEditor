@@ -5,7 +5,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.elements.St
 import com.andres_k.components.graphicComponents.userInterface.tools.items.BodyRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -169,7 +169,7 @@ public class StringListElement extends ListElement {
             if (value.contains("\n")) {
                 end = value.indexOf("\n");
                 if (end == 0) {
-                    Debug.debug("ERROR WARNING");
+                    Console.debug("ERROR WARNING");
                 } else if (end > this.maxLength) {
                     end = this.maxLength;
                 }

@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -58,7 +58,7 @@ public class BodySprite {
     public boolean changeFocusedType(EnumGameObject type) {
         for (int i = 0; i < this.bodies.size(); ++i) {
             if (this.bodies.get(i).isFocused()) {
-                Debug.debug("index: " + i);
+                Console.debug("index: " + i);
                 this.bodies.get(i).setType(type);
                 if (this.bodies.get(i).getType() == EnumGameObject.NULL) {
                     this.bodies.remove(i);
@@ -88,10 +88,10 @@ public class BodySprite {
     }
 
     public boolean isInSprite(Shape object) {
-        Debug.debug("minX: " + object.getMinX() + " >= ? " + this.sprite.getMinX());
-        Debug.debug("minY: " + object.getMinY() + " >= ? " + this.sprite.getMinY());
-        Debug.debug("maxX: " + object.getMaxX() + " <= ? " + this.sprite.getMaxX());
-        Debug.debug("maxY: " + object.getMaxY() + " <= ? " + this.sprite.getMaxY());
+        Console.debug("minX: " + object.getMinX() + " >= ? " + this.sprite.getMinX());
+        Console.debug("minY: " + object.getMinY() + " >= ? " + this.sprite.getMinY());
+        Console.debug("maxX: " + object.getMaxX() + " <= ? " + this.sprite.getMaxX());
+        Console.debug("maxY: " + object.getMaxY() + " <= ? " + this.sprite.getMaxY());
         return (object.getMinX() >= this.sprite.getMinX() && object.getMinY() >= this.sprite.getMinY()
                 && object.getMaxX() < this.sprite.getMaxX() && object.getMaxY() < this.sprite.getMaxY());
     }
@@ -109,11 +109,11 @@ public class BodySprite {
 
     public void addBodyRect(List<BodyRect> bodies) {
 
-        for (BodyRect body1 : bodies) {
-            if (body1.getType() == EnumGameObject.RECTANGLE) {
-                this.bodies.add(new BodyRect((Rectangle) body1.getOriginBody(), body1.getType(), this.sprite.getMinX(), this.sprite.getMinY(), this.sprite.getMinX(), this.sprite.getMinY()));
+        for (BodyRect item : bodies) {
+            if (item.getOriginBody() instanceof Rectangle) {
+                this.bodies.add(new BodyRect((Rectangle) item.getOriginBody(), item.getType(), this.sprite.getMinX(), this.sprite.getMinY(), this.sprite.getMinX(), this.sprite.getMinY()));
             } else {
-                this.bodies.add(new BodyRect((Circle) body1.getOriginBody(), body1.getType(), this.sprite.getMinX(), this.sprite.getMinY(), this.sprite.getMinX(), this.sprite.getMinY()));
+                this.bodies.add(new BodyRect((Circle) item.getOriginBody(), item.getType(), this.sprite.getMinX(), this.sprite.getMinY(), this.sprite.getMinX(), this.sprite.getMinY()));
             }
         }
     }

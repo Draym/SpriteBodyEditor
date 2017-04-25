@@ -7,7 +7,7 @@ import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.Debug;
+import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -49,11 +49,11 @@ public class Windows extends StateBasedGame implements Observer {
         this.addState(this.windowInterface);
         this.addState(this.windowGame);
 
-        Debug.debug("states: " + this.getStateCount());
+        Console.debug("states: " + this.getStateCount());
     }
 
     public void update(Observable o, Object arg) {
-        Debug.debug("WINDOWS Received: " + arg);
+        Console.debug("WINDOWS Received: " + arg);
         if (arg instanceof Tuple) {
             Tuple<EnumTargetTask, EnumTargetTask, Object> task = (Tuple<EnumTargetTask, EnumTargetTask, Object>) arg;
 
