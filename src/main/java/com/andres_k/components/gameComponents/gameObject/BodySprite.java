@@ -108,7 +108,14 @@ public class BodySprite {
     }
 
     public void addBodyRect(List<BodyRect> bodies) {
-        this.bodies.addAll(bodies.stream().map(body -> new BodyRect((Rectangle) body.getOriginBody(), body.getType(), this.sprite.getMinX(), this.sprite.getMinY(), this.sprite.getMinX(), this.sprite.getMinY())).collect(Collectors.toList()));
+
+        for (BodyRect body1 : bodies) {
+            if (body1.getType() == EnumGameObject.RECTANGLE) {
+                this.bodies.add(new BodyRect((Rectangle) body1.getOriginBody(), body1.getType(), this.sprite.getMinX(), this.sprite.getMinY(), this.sprite.getMinX(), this.sprite.getMinY()));
+            } else {
+                this.bodies.add(new BodyRect((Circle) body1.getOriginBody(), body1.getType(), this.sprite.getMinX(), this.sprite.getMinY(), this.sprite.getMinX(), this.sprite.getMinY()));
+            }
+        }
     }
 
 
