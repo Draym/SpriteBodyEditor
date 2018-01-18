@@ -49,6 +49,16 @@ public class BodySprite {
                 this.body.getWidth() * GlobalVariable.zoom, this.body.getHeight() * GlobalVariable.zoom);
         for (BodyRect body : this.bodies) {
             body.draw(g);
+
+            for (String id : body.getLinks()) {
+                BodyRect target = this.getBodyRect(id);
+
+                if (target != null) {
+                    Shape b1 = body.getBodyDraw();
+                    Shape b2 = target.getBodyDraw();
+                    g.drawLine(b1.getCenterX(), b1.getCenterY(), b2.getCenterX(), b2.getCenterY());
+                }
+            }
         }
     }
 
@@ -108,7 +118,6 @@ public class BodySprite {
     }
 
     public void addBodyRect(List<BodyRect> bodies) {
-
         for (BodyRect item : bodies) {
             if (item.getOriginBody() instanceof Rectangle) {
                 this.bodies.add(new BodyRect((Rectangle) item.getOriginBody(), item.getType(), this.sprite.getMinX(), this.sprite.getMinY(), this.sprite.getMinX(), this.sprite.getMinY()));
@@ -117,7 +126,6 @@ public class BodySprite {
             }
         }
     }
-
 
     public void addRect(Rectangle body, EnumGameObject type) {
         if (body.getWidth() >= 1 && body.getHeight() >= 1 && this.isInBody(body)) {
@@ -131,9 +139,31 @@ public class BodySprite {
         }
     }
 
+    public void addLinkToFocusedRect() {
+        for (BodyRect rect : this.bodies) {
+            if (rect.isFocused()) {
+                for (BodyRect target : this.bodies) {
+                    if (target.isFocused() && !target.getId().equals(rect.getId())) {
+                        rect.addLink(target.getId());
+                        target.addLink(rect.getId());
+                    }
+                }
+            }
+        }
+    }
+
     public List<BodyRect> getFocusedBodyRect() {
         List<BodyRect> result = this.bodies.stream().filter(BodyRect::isFocused).collect(Collectors.toList());
         return (result.size() != 0 ? result : null);
+    }
+
+    public BodyRect getBodyRect(String id) {
+        for (int i = 0; i < this.bodies.size(); ++i) {
+            if (this.bodies.get(i).getId() == id) {
+                return this.bodies.get(i);
+            }
+        }
+        return null;
     }
 
     @Override

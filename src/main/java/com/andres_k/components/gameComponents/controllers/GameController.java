@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.controllers;
 
 import com.andres_k.components.gameComponents.gameObject.BodyCreator;
+import com.andres_k.components.gameComponents.gameObject.BodyRect;
 import com.andres_k.components.gameComponents.gameObject.BodySprite;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
@@ -19,6 +20,7 @@ import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
 
 import java.io.File;
 import java.util.List;
@@ -28,8 +30,10 @@ import java.util.Observable;
  * Created by andres_k on 08/07/2015.
  */
 public class GameController extends WindowController {
-    private BodyCreator image;
+    private BodyCreator bodyCreator;
     private BodySprite bodyFocused;
+    private List<BodyRect> bodyCopied;
+    private boolean drawBodyCopied;
     private InputGame inputGame;
     private Pair<Float, Float> startClick;
     private Pair<Float, Float> endClick;
@@ -40,7 +44,7 @@ public class GameController extends WindowController {
     private EnumGameObject current;
 
     public GameController() throws JSONException {
-        this.image = null;
+        this.bodyCreator = null;
         this.bodyFocused = null;
         this.startClick = null;
         this.endClick = null;
@@ -58,19 +62,21 @@ public class GameController extends WindowController {
 
     @Override
     public void leave() {
-        if (this.image != null) {
-            this.image.saveInFile();
+        if (this.bodyCreator != null) {
+            this.bodyCreator.saveInFile();
         }
     }
 
     @Override
     public void init() {
+        this.bodyCopied = null;
+        this.drawBodyCopied = false;
     }
 
     @Override
     public void renderWindow(Graphics g) {
-        if (this.image != null)
-            this.image.draw(g);
+        if (this.bodyCreator != null)
+            this.bodyCreator.draw(g);
         if (this.startClick != null && this.endClick != null) {
             g.setColor(Color.pink);
             if (this.current == EnumGameObject.RECTANGLE) {
@@ -81,24 +87,30 @@ public class GameController extends WindowController {
                 g.draw(MathTools.createRectangle(this.startClick, this.endClick));
             }
         }
+        if (this.bodyCopied != null && this.drawBodyCopied && this.bodyCopied.size() == 1) {
+            g.setColor(Color.red);
+            for (BodyRect item : this.bodyCopied) {
+                g.draw(new Rectangle(GlobalVariable.mouseX, GlobalVariable.mouseY, item.getSizes().getV1() * GlobalVariable.zoom, item.getSizes().getV2() * GlobalVariable.zoom));
+            }
+        }
     }
 
     @Override
     public void updateWindow(GameContainer gameContainer) {
+        Input input = gameContainer.getInput();
+
+        GlobalVariable.mouseX = input.getMouseX();
+        GlobalVariable.mouseY = input.getMouseY();
+
         this.updateSliding();
-        if (this.image != null)
-            this.image.update();
+        if (this.bodyCreator != null)
+            this.bodyCreator.update();
         if (this.startClick != null) {
-            Input input = gameContainer.getInput();
-
-            int x = input.getMouseX();
-            int y = input.getMouseY();
-
             if (this.endClick == null) {
-                this.endClick = new Pair<>((float) x, (float) y);
+                this.endClick = new Pair<>((float) GlobalVariable.mouseX, (float) GlobalVariable.mouseY);
             } else {
-                this.endClick.setV1((float) x);
-                this.endClick.setV2((float) y);
+                this.endClick.setV1((float) GlobalVariable.mouseX);
+                this.endClick.setV2((float) GlobalVariable.mouseY);
             }
         }
     }
@@ -126,12 +138,15 @@ public class GameController extends WindowController {
         } else if (result == EnumInput.MOVE_LEFT) {
             this.upOriginX = -5 * GlobalVariable.zoom;
             this.upOriginY = 0;
+        } else if (result == EnumInput.PASTE) {
+            this.bodyCopied = this.bodyCreator.getBodyRectCopy();
+            this.drawBodyCopied = true;
         }
     }
 
     @Override
     public void keyReleased(int key, char c) {
-        if (this.image != null) {
+        if (this.bodyCreator != null) {
             EnumInput result = this.inputGame.checkInput(key, EnumInput.RELEASED);
 
             EnumGameObject type = null;
@@ -155,23 +170,27 @@ public class GameController extends WindowController {
             } else if (result == EnumInput.BODY) {
                 this.current = EnumGameObject.BODY;
             } else if (result == EnumInput.COPY) {
-                this.image.copyBodyRect();
+                this.bodyCreator.copyBodyRect();
             } else if (result == EnumInput.PASTE) {
-                this.image.pasteBodyRect(this.bodyFocused);
+                this.bodyCreator.pasteBodyRect(this.bodyFocused);
+                this.bodyCopied = null;
+                this.drawBodyCopied = false;
+            } else if (result == EnumInput.LINK) {
+                this.bodyCreator.addLinkToFocusedRect();
             }
             if (type != null) {
-                this.image.changeFocusedType(type);
+                this.bodyCreator.changeFocusedType(type);
             }
         }
     }
 
     @Override
     public void mousePressed(int button, int x, int y) {
-        if (this.image != null)
+        if (this.bodyCreator != null)
             if (button == 0) {
                 int tmpX = (int) ((x + GlobalVariable.originX) / GlobalVariable.zoom);
                 int tmpY = (int) ((y + GlobalVariable.originY) / GlobalVariable.zoom);
-                this.bodyFocused = this.image.onClick(tmpX, tmpY);
+                this.bodyFocused = this.bodyCreator.onClick(tmpX, tmpY);
 
                 if (this.bodyFocused != null) {
                     this.startClick = new Pair<>((float) x, (float) y);
@@ -212,7 +231,7 @@ public class GameController extends WindowController {
         File file = new File(GlobalVariable.folder + path.substring(0, path.indexOf(".")) + ".json");
 
         if (file.exists() && !file.isDirectory()) {
-            this.image = new BodyCreator(new JSONObject(StringTools.readFile(GlobalVariable.folder + path.substring(0, path.indexOf(".")) + ".json")));
+            this.bodyCreator = new BodyCreator(new JSONObject(StringTools.readFile(GlobalVariable.folder + path.substring(0, path.indexOf(".")) + ".json")));
             return true;
         }
         return false;
@@ -220,7 +239,7 @@ public class GameController extends WindowController {
 
     public void createNewJsonFile(String path, float sizeX, float sizeY) throws SlickException, JSONException {
         if (!this.loadJsonFile(path)) {
-            this.image = new BodyCreator(path, new Image(GlobalVariable.folder + path), sizeX, sizeY);
+            this.bodyCreator = new BodyCreator(path, new Image(GlobalVariable.folder + path), sizeX, sizeY);
         }
     }
 
@@ -242,7 +261,7 @@ public class GameController extends WindowController {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        this.image = null;
+                        this.bodyCreator = null;
                         this.window.quit();
                     }
                 } else if (received.getV3() instanceof MessageFileLoad) {
@@ -251,14 +270,14 @@ public class GameController extends WindowController {
                         this.stateWindow.enterState(EnumWindow.GAME.getValue());
                     } catch (Exception e) {
                         e.printStackTrace();
-                        this.image = null;
+                        this.bodyCreator = null;
                         this.window.quit();
                     }
                 } else if (received.getV3() instanceof EnumOverlayElement) {
                     if (received.getV3() == EnumOverlayElement.EXIT) {
                         this.window.quit();
                     } else if (received.getV3() == EnumOverlayElement.SAVE) {
-                        this.image.saveInFile();
+                        this.bodyCreator.saveInFile();
                     }
                 }
             }

@@ -4,6 +4,7 @@ import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.Console;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.Color;
@@ -11,6 +12,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -23,6 +28,9 @@ public class BodyRect {
     private Pair<Float, Float> positions;
     private Pair<Float, Float> sizes;
     private EnumGameObject type;
+    private String id;
+
+    private List<String> links;
 
     private boolean focused;
     private Pair<Float, Float> origin;
@@ -37,6 +45,8 @@ public class BodyRect {
         this.origin = new Pair<>(posX, posY);
         this.type = type;
         this.focused = false;
+        this.id = UUID.randomUUID().toString();
+        this.links = new ArrayList<>();
         Console.debug("SAVE RECTANGLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "}");
     }
 
@@ -50,13 +60,21 @@ public class BodyRect {
         this.origin = new Pair<>(posX, posY);
         this.type = type;
         this.focused = false;
+        this.id = UUID.randomUUID().toString();
+        this.links = new ArrayList<>();
         Console.debug("SAVE CIRCLE at [" + this.positions.getV1() + ", " + this.positions.getV2() + "] with  {" + this.sizes.getV1() + ", " + this.sizes.getV2() + "}");
     }
 
     public BodyRect(JSONObject object, float posX, float posY) throws JSONException {
         this.type = EnumGameObject.getEnumByValue(object.getString("type"));
         this.origin = new Pair<>(posX, posY);
-
+        this.focused = false;
+        this.id = object.getString("id");
+        this.links = new ArrayList<>();
+        JSONArray array = object.getJSONArray("links");
+        for (int i = 0; i < array.length(); ++i) {
+            this.links.add(array.getString(i));
+        }
         this.positions = new Pair<>((float) object.getDouble("posX") + this.origin.getV1(), (float) object.getDouble("posY") + this.origin.getV2());
         this.sizes = new Pair<>((float) object.getDouble("sizeX"), (float) object.getDouble("sizeY"));
     }
@@ -117,7 +135,23 @@ public class BodyRect {
         return focus;
     }
 
+    public void addLink(String id) {
+        for (String link : this.links) {
+            if (link.equals(id))
+                return;
+        }
+        this.links.add(id);
+    }
+
     // GETTERS
+    public String getId() {
+        return this.id;
+    }
+
+    public List<String> getLinks() {
+        return this.links;
+    }
+
     public boolean isFocused() {
         return this.focused;
     }
@@ -152,11 +186,18 @@ public class BodyRect {
         JSONObject object = new JSONObject();
 
         try {
+            object.put("id", this.id);
             object.put("type", this.type.getValue());
-            object.put("posX", this.positions.getV1() - this.origin.getV1());
-            object.put("posY", this.positions.getV2() - this.origin.getV2());
-            object.put("sizeX", this.sizes.getV1());
-            object.put("sizeY", this.sizes.getV2());
+            object.put("posX", (int)(this.positions.getV1() - this.origin.getV1()));
+            object.put("posY", (int)(this.positions.getV2() - this.origin.getV2()));
+            object.put("sizeX", this.sizes.getV1().intValue());
+            object.put("sizeY", this.sizes.getV2().intValue());
+
+            JSONArray array = new JSONArray();
+            for (String value : this.links) {
+                array.put(value);
+            }
+            object.put("links", array);
         } catch (JSONException e) {
             e.printStackTrace();
         }

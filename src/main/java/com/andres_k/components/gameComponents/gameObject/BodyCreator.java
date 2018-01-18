@@ -23,6 +23,7 @@ public class BodyCreator {
     private float sizeXSprite;
     private float sizeYSprite;
     private List<BodySprite> bodies;
+
     private List<BodyRect> bodyRectCopy;
 
     public BodyCreator(String path, Image image, float sizeX, float sizeY) {
@@ -87,7 +88,18 @@ public class BodyCreator {
 
     public void pasteBodyRect(BodySprite item) {
         Console.debug("try to paste: " + this.bodyRectCopy.size());
-        item.addBodyRect(this.bodyRectCopy);
+        if (this.bodyRectCopy.size() == 1) {
+            Console.debug("paste one");
+            item.addRect(new Rectangle((GlobalVariable.mouseX + GlobalVariable.originX) / GlobalVariable.zoom, (GlobalVariable.mouseY + GlobalVariable.originY) / GlobalVariable.zoom, this.bodyRectCopy.get(0).getSizes().getV1(), this.bodyRectCopy.get(0).getSizes().getV2()), this.bodyRectCopy.get(0).getType());
+        } else {
+            item.addBodyRect(this.bodyRectCopy);
+        }
+    }
+
+    public void addLinkToFocusedRect() {
+        for (BodySprite body : this.bodies) {
+            body.addLinkToFocusedRect();
+        }
     }
 
     public BodySprite onClick(float x, float y) {
@@ -125,4 +137,10 @@ public class BodyCreator {
         }
         return object.toString();
     }
+
+
+    public List<BodyRect> getBodyRectCopy() {
+        return this.bodyRectCopy;
+    }
+
 }
