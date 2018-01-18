@@ -56,6 +56,7 @@ public class BodySprite {
                 if (target != null) {
                     Shape b1 = body.getBodyDraw();
                     Shape b2 = target.getBodyDraw();
+                    g.setColor(Color.magenta);
                     g.drawLine(b1.getCenterX(), b1.getCenterY(), b2.getCenterX(), b2.getCenterY());
                 }
             }
@@ -152,6 +153,19 @@ public class BodySprite {
         }
     }
 
+    public void removeLinkFromFocusedRect() {
+        for (BodyRect rect : this.bodies) {
+            if (rect.isFocused()) {
+                for (BodyRect target : this.bodies) {
+                    if (target.isFocused() && !target.getId().equals(rect.getId())) {
+                        rect.removeLink(target.getId());
+                        target.removeLink(rect.getId());
+                    }
+                }
+            }
+        }
+    }
+
     public List<BodyRect> getFocusedBodyRect() {
         List<BodyRect> result = this.bodies.stream().filter(BodyRect::isFocused).collect(Collectors.toList());
         return (result.size() != 0 ? result : null);
@@ -159,7 +173,7 @@ public class BodySprite {
 
     public BodyRect getBodyRect(String id) {
         for (int i = 0; i < this.bodies.size(); ++i) {
-            if (this.bodies.get(i).getId() == id) {
+            if (this.bodies.get(i).getId().equals(id)) {
                 return this.bodies.get(i);
             }
         }

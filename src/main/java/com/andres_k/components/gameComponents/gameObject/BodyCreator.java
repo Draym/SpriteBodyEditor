@@ -102,6 +102,12 @@ public class BodyCreator {
         }
     }
 
+    public void removeLinkToFocusedRect() {
+        for (BodySprite body : this.bodies) {
+            body.removeLinkFromFocusedRect();
+        }
+    }
+
     public BodySprite onClick(float x, float y) {
         for (BodySprite body : this.bodies) {
             if (body.isOnFocus(x, y)) {

@@ -55,7 +55,7 @@ public class BodyRect {
     }
 
     public BodyRect(Circle body, EnumGameObject type, float posX, float posY, float addX, float addY) {
-        this.positions = new Pair<>(body.getCenterX() + addX, body.getCenterY()+ addY);
+        this.positions = new Pair<>(body.getCenterX() + addX, body.getCenterY() + addY);
         this.sizes = new Pair<>(body.getRadius(), -1f);
         this.origin = new Pair<>(posX, posY);
         this.type = type;
@@ -77,6 +77,7 @@ public class BodyRect {
         }
         this.positions = new Pair<>((float) object.getDouble("posX") + this.origin.getV1(), (float) object.getDouble("posY") + this.origin.getV2());
         this.sizes = new Pair<>((float) object.getDouble("sizeX"), (float) object.getDouble("sizeY"));
+        Console.debug("New Rect: " + this);
     }
 
     public void draw(Graphics g) {
@@ -143,6 +144,15 @@ public class BodyRect {
         this.links.add(id);
     }
 
+    public void removeLink(String id) {
+        for (int i = 0; i < this.links.size(); ++i) {
+            if (this.links.get(i).equals(id)) {
+                this.links.remove(i);
+                --i;
+            }
+        }
+    }
+
     // GETTERS
     public String getId() {
         return this.id;
@@ -188,8 +198,8 @@ public class BodyRect {
         try {
             object.put("id", this.id);
             object.put("type", this.type.getValue());
-            object.put("posX", (int)(this.positions.getV1() - this.origin.getV1()));
-            object.put("posY", (int)(this.positions.getV2() - this.origin.getV2()));
+            object.put("posX", (int) (this.positions.getV1() - this.origin.getV1()));
+            object.put("posY", (int) (this.positions.getV2() - this.origin.getV2()));
             object.put("sizeX", this.sizes.getV1().intValue());
             object.put("sizeY", this.sizes.getV2().intValue());
 

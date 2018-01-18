@@ -177,6 +177,8 @@ public class GameController extends WindowController {
                 this.drawBodyCopied = false;
             } else if (result == EnumInput.LINK) {
                 this.bodyCreator.addLinkToFocusedRect();
+            } else if (result == EnumInput.REMOVE_LINK) {
+                this.bodyCreator.removeLinkToFocusedRect();
             }
             if (type != null) {
                 this.bodyCreator.changeFocusedType(type);
