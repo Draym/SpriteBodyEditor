@@ -50,7 +50,7 @@ public class InterfaceOverlay extends Overlay {
         float menuY = (WindowConfig.getSizeY() / 2) - 150;
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_CONTROLS, new TableMenuElement(EnumOverlayElement.TABLE_MENU_CONTROLS, this.genericSendTask,
-                new BodyRect(new Rectangle(menuX, menuY, 400, 300), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE))));
+                new BodyRect(new Rectangle(menuX, menuY, 400, 450), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE))));
         this.elements.put(EnumOverlayElement.TABLE_MENU_SETTINGS, new GenericElement(EnumOverlayElement.TABLE_MENU_SETTINGS,
                 new BodyRect(new Rectangle(menuX, menuY, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)), new Pair<>(false, true), false, new boolean[]{true, true}));
         this.elements.put(EnumOverlayElement.TABLE_MENU_NEW, new GenericElement(EnumOverlayElement.TABLE_MENU_NEW, this.genericSendTask,
@@ -148,19 +148,19 @@ public class InterfaceOverlay extends Overlay {
         float posY = tableMenuNew.getBody().getMinY();
 
         posY += (StringTools.charSizeY() * 2);
-        tableMenuNew.doTask(new StringElement(new BodyRect(new Rectangle(posX + 10, posY, tableMenuNew.getBody().getSizeX() - 10, StringTools.charSizeY())), new StringTimer("image"), Color.black, Element.PositionInBody.LEFT_MID));
-        tableMenuNew.doTask(new SelectionField(new BodyRect(new Rectangle(posX + 60, posY, 200, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
+        tableMenuNew.doTask(new StringElement(new BodyRect(new Rectangle(posX + 10, posY, tableMenuNew.getBody().getSizeX() - 10, StringTools.charSizeY())), new StringTimer("image path ="), Color.black, Element.PositionInBody.LEFT_MID));
+        tableMenuNew.doTask(new SelectionField(new BodyRect(new Rectangle(posX + 125, posY, 165, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
                 new StringElement(new StringTimer(""), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "path", true));
 
         posY += (StringTools.charSizeY() * 2);
-        tableMenuNew.doTask(new StringElement(new BodyRect(new Rectangle(posX + 10, posY, tableMenuNew.getBody().getSizeX() + 10, StringTools.charSizeY())), new StringTimer("sprite size:"), Color.black, Element.PositionInBody.LEFT_MID));
+        tableMenuNew.doTask(new StringElement(new BodyRect(new Rectangle(posX + 10, posY, tableMenuNew.getBody().getSizeX() + 10, StringTools.charSizeY())), new StringTimer("sprite size"), Color.black, Element.PositionInBody.LEFT_MID));
         posY += (StringTools.charSizeY());
-        tableMenuNew.doTask(new StringElement(new BodyRect(new Rectangle(posX + 20, posY, tableMenuNew.getBody().getSizeX() + 20, StringTools.charSizeY())), new StringTimer("sizeX"), Color.black, Element.PositionInBody.LEFT_MID));
-        tableMenuNew.doTask(new SelectionField(new BodyRect(new Rectangle(posX + 70, posY, 70, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
+        tableMenuNew.doTask(new StringElement(new BodyRect(new Rectangle(posX + 20, posY, tableMenuNew.getBody().getSizeX() + 20, StringTools.charSizeY())), new StringTimer("sizeX ="), Color.black, Element.PositionInBody.LEFT_MID));
+        tableMenuNew.doTask(new SelectionField(new BodyRect(new Rectangle(posX + 90, posY, 70, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
                 new StringElement(new StringTimer(""), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "sizeX", true));
         posY += (StringTools.charSizeY());
-        tableMenuNew.doTask(new StringElement(new BodyRect(new Rectangle(posX + 20, posY, tableMenuNew.getBody().getSizeX() + 20, StringTools.charSizeY())), new StringTimer("sizeY"), Color.black, Element.PositionInBody.LEFT_MID));
-        tableMenuNew.doTask(new SelectionField(new BodyRect(new Rectangle(posX + 70, posY, 70, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
+        tableMenuNew.doTask(new StringElement(new BodyRect(new Rectangle(posX + 20, posY, tableMenuNew.getBody().getSizeX() + 20, StringTools.charSizeY())), new StringTimer("sizeY ="), Color.black, Element.PositionInBody.LEFT_MID));
+        tableMenuNew.doTask(new SelectionField(new BodyRect(new Rectangle(posX + 90, posY, 70, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLUE)),
                 new StringElement(new StringTimer(""), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "sizeY", true));
         posY += (StringTools.charSizeY());
 

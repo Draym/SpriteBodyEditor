@@ -10,11 +10,12 @@ import com.andres_k.components.networkComponents.messages.MessageFileNew;
 import com.andres_k.components.networkComponents.messages.MessageSelectImage;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.TaskFactory;
-import com.andres_k.utils.configs.Config;
+import com.andres_k.utils.configs.ConfigPath;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.Console;
+import com.andres_k.utils.tools.FilesTools;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -86,8 +87,8 @@ public class InterfaceController extends WindowController {
             } else {
 
             }
-        } else if (key == Input.KEY_BACK || key == Input.KEY_DELETE){
-            if (this.files.containsKey(this.currentPath)){
+        } else if (key == Input.KEY_BACK || key == Input.KEY_DELETE) {
+            if (this.files.containsKey(this.currentPath)) {
                 this.setChanged();
                 this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.INTERFACE_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_LIST,
                         new StringElement(null, Color.black, EnumOverlayElement.TABLE_LIST.getValue() + ":" + this.currentPath, Element.PositionInBody.MIDDLE_MID))));
@@ -165,12 +166,20 @@ public class InterfaceController extends WindowController {
         }
         Console.debug("Save Files: " + array);
         object.put("files", array);
-        StringTools.writeInFile(Config.saveFiles, object.toString());
+        FilesTools.writeInTempFile(ConfigPath.savedFiles, object.toString());
     }
 
-    public void initSavedFiles() throws JSONException, SlickException {
-        String saveFiles = StringTools.readFile(Config.saveFiles);
-        JSONObject jsonFiles = new JSONObject(saveFiles);
+    public void initSavedFiles() throws JSONException {
+        String savedFiles = "";
+        try {
+            savedFiles = FilesTools.readTempFile(ConfigPath.savedFiles);
+        } catch (Exception ignored) {
+        }
+        if (savedFiles.isEmpty()) {
+            return;
+        }
+
+        JSONObject jsonFiles = new JSONObject(savedFiles);
 
         JSONArray arrayFiles = jsonFiles.getJSONArray("files");
 

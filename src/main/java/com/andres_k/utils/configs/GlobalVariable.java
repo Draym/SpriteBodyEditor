@@ -10,6 +10,7 @@ public class GlobalVariable {
     public static int mouseX = 0;
     public static int mouseY = 0;
     public static boolean debug = true;
+    public static boolean log = false;
     public static final String folder = "Sprite&Body/";
 
     public static void init(){

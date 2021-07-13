@@ -10,4 +10,14 @@ public class Console {
         if (GlobalVariable.debug)
             System.out.println(message);
     }
+
+    public static void write(String message){
+        if (GlobalVariable.log) {
+            System.out.println(message);
+        }
+    }
+
+    public static void err(String locateClass, String locateMethod, String message){
+        System.err.println("Locate: [" + locateClass + "." + locateMethod + "] -> " + message);
+    }
 }

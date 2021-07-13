@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.overlay;
 
-import com.andres_k.utils.tools.StringTools;
+import com.andres_k.utils.tools.FilesTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -33,7 +33,7 @@ public class OverlayConfigs {
     }
 
     private void initPreference() throws JSONException {
-        this.configPreference = new JSONObject(StringTools.readFile(this.filePreference));
+        this.configPreference = new JSONObject(FilesTools.readTempFile(this.filePreference));
         Iterator iterator = this.configPreference.keys();
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
@@ -47,7 +47,7 @@ public class OverlayConfigs {
     }
 
     private void initData() throws JSONException {
-        this.configData = new JSONObject(StringTools.readFile(this.fileData));
+        this.configData = new JSONObject(FilesTools.readTempFile(this.fileData));
         Iterator iterator = this.configData.keys();
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
@@ -94,7 +94,7 @@ public class OverlayConfigs {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            StringTools.writeInFile(this.filePreference, this.configPreference.toString());
+            FilesTools.writeInTempFile(this.filePreference, this.configPreference.toString());
             return true;
         }
         return false;
