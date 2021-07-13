@@ -12,6 +12,12 @@ import java.util.Scanner;
 
 public class FilesTools {
 
+    public static boolean validFile(String path) {
+        File file = new File(path);
+
+        return (file.exists() && !file.isDirectory());
+    }
+
     public static String readInput(InputStream inputStream) {
         Scanner scan = new Scanner(inputStream).useDelimiter("\\A");
 

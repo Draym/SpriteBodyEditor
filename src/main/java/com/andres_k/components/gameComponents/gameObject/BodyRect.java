@@ -193,10 +193,6 @@ public class BodyRect {
 
     @Override
     public String toString() {
-
-
-        return forWaterWar();
-        /*
         JSONObject object = new JSONObject();
 
         try {
@@ -206,31 +202,6 @@ public class BodyRect {
             object.put("posY", (int) (this.positions.getV2() - this.origin.getV2()));
             object.put("sizeX", this.sizes.getV1().intValue());
             object.put("sizeY", this.sizes.getV2().intValue());
-
-            JSONArray array = new JSONArray();
-            for (String value : this.links) {
-                array.put(value);
-            }
-            object.put("links", array);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return object.toString();*/
-    }
-
-    private String forWaterWar() {
-        JSONObject object = new JSONObject();
-
-        try {
-            object.put("id", this.id);
-            object.put("type", this.type.getValue());
-            object.put("x", (int) (this.positions.getV1() - this.origin.getV1()));
-            object.put("y", (int) (this.positions.getV2() - this.origin.getV2()));
-            object.put("width", this.sizes.getV1().intValue());
-            object.put("height", this.sizes.getV2().intValue());
-            object.put("rotation", 0f);
-            object.put("component", "");
 
             JSONArray array = new JSONArray();
             for (String value : this.links) {

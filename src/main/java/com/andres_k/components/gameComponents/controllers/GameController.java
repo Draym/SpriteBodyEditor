@@ -15,8 +15,8 @@ import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.utils.tools.FilesTools;
 import com.andres_k.utils.tools.MathTools;
-import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.*;
@@ -233,7 +233,7 @@ public class GameController extends WindowController {
         File file = new File(GlobalVariable.folder + path.substring(0, path.indexOf(".")) + ".json");
 
         if (file.exists() && !file.isDirectory()) {
-            this.bodyCreator = new BodyCreator(new JSONObject(StringTools.readFile(GlobalVariable.folder + path.substring(0, path.indexOf(".")) + ".json")));
+            this.bodyCreator = new BodyCreator(new JSONObject(FilesTools.readFile(GlobalVariable.folder + path.substring(0, path.indexOf(".")) + ".json")));
             return true;
         }
         return false;

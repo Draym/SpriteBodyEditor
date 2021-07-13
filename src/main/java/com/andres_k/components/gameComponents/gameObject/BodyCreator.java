@@ -2,7 +2,7 @@ package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.tools.Console;
-import com.andres_k.utils.tools.StringTools;
+import com.andres_k.utils.tools.FilesTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -119,7 +119,7 @@ public class BodyCreator {
 
     public void saveInFile() {
         String jsonName = this.path.substring(0, this.path.indexOf(".")) + ".json";
-        StringTools.writeInFile(GlobalVariable.folder + jsonName, this.toString());
+        FilesTools.writeInFile(GlobalVariable.folder + jsonName, this.toString());
     }
 
     @Override

@@ -16,7 +16,6 @@ import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.FilesTools;
-import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -82,7 +81,7 @@ public class InterfaceController extends WindowController {
     @Override
     public void keyReleased(int key, char c) {
         if (key == Input.KEY_ENTER && this.currentPath != null) {
-            if (StringTools.validFile(GlobalVariable.folder + this.currentPath.substring(0, this.currentPath.indexOf(".")) + ".json")) {
+            if (FilesTools.validFile(GlobalVariable.folder + this.currentPath.substring(0, this.currentPath.indexOf(".")) + ".json")) {
                 this.launchWithPath(new MessageFileLoad("admin", "admin", this.currentPath));
             } else {
 
